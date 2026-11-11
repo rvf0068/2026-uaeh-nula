@@ -142,10 +142,12 @@ def graphs():
     frames={}
     # 0. A graphic on the title slide.
     frames['intro']=[stage(move(house(edge_count=0),.9)),stage(move(house(edge_count=4),.9)),stage(move(house(),.9))]
-    # 1. General graph: vertices, then edges.
-    p={'0':(-2.8,-1.5),'1':(-2,1.7),'2':(-.2,.4),'3':(1.2,-1.8),'4':(2.5,1.5),'5':(3,-.4)}
-    e=[('0','1'),('1','2'),('2','3'),('2','4'),('4','5'),('3','5'),('0','3')]
-    frames['graficas']=[stage(graph(p)),stage(graph(p,e[:3])),stage(graph(p,e))]
+    # 1. A planar wheel graph, used to introduce simple graphs.
+    p10={str(i):(2.85*cos(pi/2-2*pi*i/9),2.85*sin(pi/2-2*pi*i/9))
+         for i in range(9)}
+    p10['9']=(0,0)
+    e10=[(str(i),str((i+1)%9)) for i in range(9)]+[(str(i),'9') for i in range(9)]
+    frames['graficas']=[stage(graph(p10,e10))]
     # 2. Complete vertex subsets; a single vertex, triangles and K4.
     h=house()
     frames['completas']=[stage(h),stage(house([(('0','2','3'),CORAL,.30)])),

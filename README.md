@@ -48,7 +48,7 @@ Por omisión usa `-ql` (calidad baja, para pruebas). Para calidad alta:
 MANIM_QUALITY=-qh bash scripts/render_manim.sh
 ```
 
-El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su primer fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y la animación editable de los 16 ejemplos. Los videos usan fondo blanco, vértices y aristas algo más grandes para integrarse mejor con las diapositivas. Muestran etapas sucesivas sin texto, mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
+El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su primer fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y la animación editable de los 16 ejemplos. Los videos usan fondo blanco, vértices y aristas algo más grandes para integrarse mejor con las diapositivas. En la escena «Gráficas» aparece un grafo rueda planar de diez vértices y 18 aristas; después se ilustran un lazo (arista de un vértice a sí mismo) y una arista paralela con curvas, marcados como no permitidos. Las demás escenas muestran etapas sucesivas mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
 
 Ejemplo de Manim para una sola escena:
 

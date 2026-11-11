@@ -11,10 +11,15 @@
 :PROPERTIES:
 :BEAMER_ENV: fullframe
 :END:
+
 #+begin_center
-#+LATEX: {\Large\bfseries Gráficas iteradas de clanes\\[.45em]contractibilidad y nulidad\par}
+#+LATEX: {\Large\bfseries Gráficas iteradas de clanes\\[.2em]contractibilidad y nulidad\par}
+
+\bigskip\bigskip
 
 Rafael Villarroel Flores, UAEH
+
+\bigskip\bigskip
 
 22 de octubre de 2026
 
@@ -28,10 +33,13 @@ Rafael Villarroel Flores, UAEH
 :PROPERTIES:
 :BEAMER_COL: 0.53
 :END:
-#+LATEX: \vspace{.3em}
+
 Consideramos solamente gráficas finitas y simples (no dirigidas, sin lazos, sin aristas múltiples).
 
+#+latex: \bigskip
+
 La cantidad de vértices de la gráfica \(G\) se llama el *orden* de \(G\) y lo denotamos \(|G|\).
+
 *** Animación
 :PROPERTIES:
 :BEAMER_COL: 0.45

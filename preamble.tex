@@ -1,0 +1,26 @@
+% Estilo autónomo: no requiere options.org ni los macros TikZ originales.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usetheme{Boadilla}
+\definecolor{AzulTitulo}{HTML}{14253B}
+\definecolor{VerdeEstructura}{HTML}{127C84}
+\setbeamercolor{frametitle}{fg=white,bg=AzulTitulo}
+\setbeamercolor{structure}{fg=VerdeEstructura}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamersize{text margin left=7mm,text margin right=7mm}
+\newcommand{\AnimWide}[1]{%
+  \href{run:videos/#1.mp4}{%
+    \includegraphics[width=.97\linewidth,height=.60\textheight,keepaspectratio]{posters/#1.png}}}
+\newcommand{\AnimSide}[1]{%
+  \href{run:videos/#1.mp4}{%
+    \includegraphics[width=\linewidth,height=.69\textheight,keepaspectratio]{posters/#1.png}}}
+\newcommand{\AnimTitle}[1]{%
+  \href{run:videos/#1.mp4}{%
+    \includegraphics[width=.64\linewidth,height=.43\textheight,keepaspectratio]{posters/#1.png}}}
+\newcommand{\SmallText}{\fontsize{9.1}{11.3}\selectfont}

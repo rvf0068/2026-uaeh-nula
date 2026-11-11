@@ -110,25 +110,4 @@ Este script es un renderizador de referencia ligero, **no sustituye a Manim**. S
 - `storyboards.py` y `manim_scenes.py` pasan la comprobación de sintaxis de Python; se comprobaron las referencias a vértices y aristas de todos los guiones.
 - **No fue posible ejecutar Manim aquí**, por no estar instalado ni disponible desde la red. Por tanto, el render exacto de Manim todavía debe probarse en el Ubuntu del usuario. El PDF y las previsualizaciones, en cambio, sí están generados.
 
-## Mapa de ejemplos
-
-| Escena Manim | Animación en la presentación |
-| --- | --- |
-| `Intro` | Portada con el ejemplo de la casa |
-| `Graficas` | Aparición de vértices y aristas |
-| `Completas` | Completas no necesariamente maximales |
-| `Clanes` | Los dos clanes maximales del ejemplo |
-| `GraficaDeClanes` | Clanes como vértices de `K(G)` |
-| `Ejemplo` | Selección de clanes y construcción de `K(G)` |
-| `Iteradas` | Casa → `K_2` → `K_1` |
-| `Prisma` | Prisma triangular → `K_{2,3}` → prisma |
-| `SuspensionC5` | Suspensión de `C_5` y su gráfica de 10 clanes |
-| `Comportamiento` | Ejemplos convergente y divergente |
-| `IteradasOctaedro` | `O_3` → `O_4` → `O_8` |
-| `Helly` | Clanes que se intersectan en un vértice común |
-| `Piramide` | Tres clanes intersecantes sin intersección total |
-| `Escalante` | Pirámide → `K_4` → `K_1` |
-| `Desmantelables` | Eliminación de hojas de un árbol |
-| `Dominados` | Octaedro con hojas, eliminación y crecimiento del iterado |
-
 Documentación oficial: [Manim Community](https://docs.manim.community/) y [pdfpc](https://pdfpc.github.io/).

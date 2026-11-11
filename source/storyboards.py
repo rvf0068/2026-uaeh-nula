@@ -150,9 +150,7 @@ def graphs():
     frames['graficas']=[stage(graph(p10,e10))]
     # 2. Complete vertex subsets; a single vertex, triangles and K4.
     h=house()
-    frames['completas']=[stage(h),stage(house([(('0','2','3'),CORAL,.30)])),
-            stage(house([(('0','1','4'),CYAN,.30)])),
-            stage(house([(('0','1','2','3'),GOLD,.24)]))]
+    frames['completas']=[stage(h)]
     # 3. Maximal completes only, not arbitrary complete subsets.
     frames['clanes']=[stage(h),stage(house([(('0','1','4'),CYAN,.27)])),
                       stage(house([(('0','1','4'),CYAN,.23),(('0','1','2','3'),CORAL,.21)]))]

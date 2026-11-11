@@ -53,6 +53,47 @@ class _Storyboard(Scene):
 
 
 class Intro(_Storyboard): key='intro'
+class Completas(_Storyboard):
+    key='completas'
+
+    def construct(self):
+        model=graphs()[self.key][0][0]
+        self.add(visual_graph(model))
+
+        examples=[
+            (('0','2','3'),'#d1493f',('#f0aaa4',.28),(('0','2'),('2','3'),('3','0'))),
+            (('0','1','4'),'#008c95',('#99d9dc',.28),(('0','1'),('1','4'),('4','0'))),
+            (('0','1','2','3'),'#a56a00',None,
+             (('0','1'),('0','2'),('0','3'),('1','2'),('1','3'),('2','3'))),
+            (('0','1'),'#d1493f',None,(('0','1'),)),
+            (('4',),'#a56a00',None,()),
+        ]
+        for vertices,color,triangle,edges in examples:
+            highlights=VGroup()
+            if triangle:
+                light_color,opacity=triangle
+                highlights.add(Polygon(
+                    *[(*model['pos'][vertex],0) for vertex in vertices],
+                    color=light_color,stroke_color=light_color,stroke_width=8,
+                    fill_color=light_color,fill_opacity=opacity,
+                ))
+            for start,end in edges:
+                highlights.add(Line(
+                    (*model['pos'][start],0),(*model['pos'][end],0),
+                    color=color,stroke_width=20,
+                ))
+            for vertex in vertices:
+                highlights.add(Dot(
+                    point=(*model['pos'][vertex],0),
+                    radius=.36*model['node_size'],
+                    color=color,
+                ))
+            self.play(FadeIn(highlights))
+            self.wait(2)
+            self.play(FadeOut(highlights))
+            self.wait(.5)
+
+
 class Graficas(_Storyboard):
     key='graficas'
 
@@ -127,7 +168,6 @@ class Graficas(_Storyboard):
         self.play(FadeOut(duplicate_edge),FadeOut(edge_cross))
 
 
-class Completas(_Storyboard): key='completas'
 class Clanes(_Storyboard): key='clanes'
 class GraficaDeClanes(_Storyboard): key='grafica_clanes'
 class Ejemplo(_Storyboard): key='ejemplo'

@@ -22,11 +22,11 @@ def visual_graph(model):
     lines=VGroup()
     for a,b in model['edges']:
         lines.add(Line((*pos[a],0),(*pos[b],0),
-                       color=model['edge_color'], stroke_width=3.1,
+                       color=model['edge_color'], stroke_width=15,
                        stroke_opacity=model['edge_opacity']))
     dots=VGroup()
     for key,(x,y) in pos.items():
-        dots.add(Dot(point=(x,y,0),radius=.09*model['node_size'],
+        dots.add(Dot(point=(x,y,0),radius=.25*model['node_size'],
                      color=model['node_colors'].get(key,CYAN)))
     return VGroup(faces,lines,dots)
 
@@ -43,7 +43,7 @@ class _Storyboard(Scene):
         for index, snapshot in enumerate(stages):
             nxt=visual_snapshot(snapshot)
             if current is None:
-                self.play(FadeIn(nxt),run_time=.9)
+                self.add(nxt)
             else:
                 self.play(AnimationGroup(FadeOut(current),FadeIn(nxt),lag_ratio=0),run_time=1.05)
             self.wait(.65 if index<len(stages)-1 else 1.15)

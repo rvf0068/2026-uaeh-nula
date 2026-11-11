@@ -32,11 +32,11 @@ def paint(snapshot):
     for model in snapshot:
         op=int(model['edge_opacity']*255)
         for a,b in model['edges']:
-            d.line([xy(*model['pos'][a]),xy(*model['pos'][b])],fill=(*rgb(model['edge_color']),op),width=2)
+            d.line([xy(*model['pos'][a]),xy(*model['pos'][b])],fill=(*rgb(model['edge_color']),op),width=3)
     for model in snapshot:
         for name,(x,y) in model['pos'].items():
             cx,cy=xy(x,y)
-            r=max(3,int(5*model['node_size']))
+            r=max(3,int(6*model['node_size']))
             c=rgb(model['node_colors'].get(name,CYAN))
             d.ellipse((cx-r,cy-r,cx+r,cy+r),fill=(*c,255))
     return im.convert('RGB')

@@ -7,14 +7,14 @@ from __future__ import annotations
 from itertools import combinations
 from math import sin, cos, pi
 
-INK = '#e5edf7'
-EDGE = '#8fa9bf'
-CYAN = '#56d5d0'
-CORAL = '#ff8b7d'
-GOLD = '#f2cd79'
-PURPLE = '#b4a2fb'
-MINT = '#75e9af'
-BG = '#101b2b'
+INK = '#263445'
+EDGE = '#526779'
+CYAN = '#008c95'
+CORAL = '#d1493f'
+GOLD = '#a56a00'
+PURPLE = '#7050b5'
+MINT = '#16805d'
+BG = '#ffffff'
 PALETTE = (CYAN, CORAL, GOLD, PURPLE, MINT)
 
 

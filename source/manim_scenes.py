@@ -37,6 +37,36 @@ def visual_snapshot(snapshot):
     return VGroup(*(visual_graph(model) for model in snapshot))
 
 
+def complete_highlight(model, vertices, color, face=None, omit_vertices=(), omit_edges=()):
+    vertex_set=set(vertices)
+    edges=[(a,b) for a,b in model['edges'] if a in vertex_set and b in vertex_set]
+    omitted_edge_sets={frozenset(edge) for edge in omit_edges}
+    highlights=VGroup()
+    if face:
+        light_color,opacity=face
+        highlights.add(Polygon(
+            *[(*model['pos'][vertex],0) for vertex in vertices],
+            color=light_color,stroke_color=light_color,stroke_width=8,
+            fill_color=light_color,fill_opacity=opacity,
+        ))
+    for start,end in edges:
+        if frozenset((start,end)) in omitted_edge_sets:
+            continue
+        highlights.add(Line(
+            (*model['pos'][start],0),(*model['pos'][end],0),
+            color=color,stroke_width=20,
+        ))
+    for vertex in vertices:
+        if vertex in omit_vertices:
+            continue
+        highlights.add(Dot(
+            point=(*model['pos'][vertex],0),
+            radius=.36*model['node_size'],
+            color=color,
+        ))
+    return highlights
+
+
 class _Storyboard(Scene):
     key=None
     def construct(self):
@@ -61,37 +91,86 @@ class Completas(_Storyboard):
         self.add(visual_graph(model))
 
         examples=[
-            (('0','2','3'),'#d1493f',('#f0aaa4',.28),(('0','2'),('2','3'),('3','0'))),
-            (('0','1','4'),'#008c95',('#99d9dc',.28),(('0','1'),('1','4'),('4','0'))),
-            (('0','1','2','3'),'#a56a00',None,
-             (('0','1'),('0','2'),('0','3'),('1','2'),('1','3'),('2','3'))),
-            (('0','1'),'#d1493f',None,(('0','1'),)),
-            (('4',),'#a56a00',None,()),
+            (('0','2','3'),'#d1493f',('#f0aaa4',.28)),
+            (('0','1','4'),'#008c95',('#99d9dc',.28)),
+            (('0','1','2','3'),'#a56a00',None),
+            (('0','1'),'#d1493f',None),
+            (('4',),'#a56a00',None),
         ]
-        for vertices,color,triangle,edges in examples:
-            highlights=VGroup()
-            if triangle:
-                light_color,opacity=triangle
-                highlights.add(Polygon(
-                    *[(*model['pos'][vertex],0) for vertex in vertices],
-                    color=light_color,stroke_color=light_color,stroke_width=8,
-                    fill_color=light_color,fill_opacity=opacity,
-                ))
-            for start,end in edges:
-                highlights.add(Line(
-                    (*model['pos'][start],0),(*model['pos'][end],0),
-                    color=color,stroke_width=20,
-                ))
-            for vertex in vertices:
-                highlights.add(Dot(
-                    point=(*model['pos'][vertex],0),
-                    radius=.36*model['node_size'],
-                    color=color,
-                ))
+        for vertices,color,triangle in examples:
+            highlights=complete_highlight(model,vertices,color,triangle)
             self.play(FadeIn(highlights))
             self.wait(2)
             self.play(FadeOut(highlights))
             self.wait(.5)
+
+
+class Clanes(_Storyboard):
+    key='clanes'
+
+    def construct(self):
+        model=graphs()[self.key][0][0]
+        self.add(visual_graph(model))
+        first=complete_highlight(model,('0','1','4'),'#008c95',('#99d9dc',.28))
+        second=complete_highlight(model,('0','1','2','3'),'#d1493f')
+        shared_vertices=('0','1')
+        shared_edges=(('0','1'),)
+
+        self.play(FadeIn(first))
+        self.wait(2)
+        self.play(FadeOut(first))
+        self.wait(.5)
+        self.play(FadeIn(second))
+        self.wait(2)
+        self.play(FadeOut(second))
+        self.wait(.5)
+        left, right = (np.array((*model['pos'][vertex], 0)) for vertex in shared_vertices)
+        edge_direction=(right-left)/np.linalg.norm(right-left)
+        edge_normal=np.array([-edge_direction[1],edge_direction[0],0])
+        edge_half_width=.1
+        edge_halves=VGroup(
+            Polygon(
+                left+edge_normal*edge_half_width,
+                right+edge_normal*edge_half_width,
+                right, left,
+                color='#008c95',stroke_width=0,fill_color='#008c95',fill_opacity=1,
+            ),
+            Polygon(
+                left, right,
+                right-edge_normal*edge_half_width,
+                left-edge_normal*edge_half_width,
+                color='#d1493f',stroke_width=0,fill_color='#d1493f',fill_opacity=1,
+            ),
+        )
+        split_vertices=VGroup()
+        radius=.36*model['node_size']
+        for vertex in shared_vertices:
+            center=np.array((*model['pos'][vertex],0))
+            for start_angle,end_angle,color in (
+                (0,np.pi,'#008c95'),
+                (np.pi,2*np.pi,'#d1493f'),
+            ):
+                angles=np.linspace(start_angle,end_angle,25)
+                arc=[center+radius*np.array([np.cos(angle),np.sin(angle),0])
+                     for angle in angles]
+                split_vertices.add(Polygon(
+                    center,*arc,color=color,stroke_color=color,stroke_width=0,
+                    fill_color=color,fill_opacity=1,
+                ))
+        combined=VGroup(
+            complete_highlight(
+                model,('0','1','4'),'#008c95',('#99d9dc',.28),
+                omit_vertices=shared_vertices,omit_edges=shared_edges,
+            ),
+            complete_highlight(
+                model,('0','1','2','3'),'#d1493f',
+                omit_vertices=shared_vertices,omit_edges=shared_edges,
+            ),
+            edge_halves,
+            split_vertices,
+        )
+        self.play(FadeIn(combined))
+        self.wait(2)
 
 
 class Graficas(_Storyboard):
@@ -168,7 +247,6 @@ class Graficas(_Storyboard):
         self.play(FadeOut(duplicate_edge),FadeOut(edge_cross))
 
 
-class Clanes(_Storyboard): key='clanes'
 class GraficaDeClanes(_Storyboard): key='grafica_clanes'
 class Ejemplo(_Storyboard): key='ejemplo'
 class Iteradas(_Storyboard): key='iteradas'

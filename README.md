@@ -15,15 +15,25 @@ sudo apt install -y \
 
 Si ya tienes una instalación propia de TeX Live, no necesitas sustituirla. Los paquetes GStreamer aparecen por el problema de códecs observado al probar `pdfpc`. Se utiliza **Manim Community**, no `manimgl` (la variante de 3Blue1Brown).
 
-Desde el directorio descomprimido:
+## Crear el entorno de Manim con `uv`
+
+Instala `uv` siguiendo las [instrucciones oficiales](https://docs.astral.sh/uv/getting-started/installation/). En Ubuntu, también puedes usar el instalador independiente:
 
 ```bash
-python3 -m venv .venv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Abre una terminal nueva, cambia al directorio del proyecto y crea un entorno local con Python 3.12:
+
+```bash
+cd /ruta/al/directorio/2026-uaeh-k-null-s2
+uv venv --python 3.12 .venv
+uv pip install --python .venv/bin/python -r requirements.txt
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
 manim --version
 ```
+
+`uv` instala Python 3.12 si hace falta. El entorno queda en `.venv/`; para volver a usarlo en una terminal nueva, activa el entorno con `source .venv/bin/activate` desde la raíz del proyecto. Las dependencias del sistema indicadas arriba (en particular Cairo, Pango y FFmpeg) siguen siendo necesarias.
 
 ## Renderizar los dieciséis videos con Manim
 
@@ -86,7 +96,7 @@ Si modificas el contenido en el `.tex` en lugar del `.org`, **no ejecutes `expor
 Si tienes Pillow y ffmpeg:
 
 ```bash
-python -m pip install Pillow
+uv pip install --python .venv/bin/python Pillow
 python scripts/render_previews.py
 ```
 

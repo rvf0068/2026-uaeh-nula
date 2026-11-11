@@ -2,3 +2,8 @@
 *.bbl
 /presentacion.pdf
 /presentacion.tex
+/.venv/
+/.manim_media/
+/posters/
+/source/__pycache__/
+/videos/

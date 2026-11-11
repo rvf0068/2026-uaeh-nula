@@ -48,7 +48,7 @@ Por omisión usa `-ql` (calidad baja, para pruebas). Para calidad alta:
 MANIM_QUALITY=-qh bash scripts/render_manim.sh
 ```
 
-El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su último fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y la animación editable de los 16 ejemplos. Los videos muestran etapas sucesivas sin texto, mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
+El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su primer fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y la animación editable de los 16 ejemplos. Los videos muestran etapas sucesivas sin texto, mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
 
 Ejemplo de Manim para una sola escena:
 
@@ -79,7 +79,7 @@ Asegúrate de ejecutar estos comandos **desde la raíz** del proyecto. Para prob
 
 - `presentacion.org`: versión Org/Beamer editable. Los encabezados `**` representan diapositivas y las columnas se construyen con subencabezados `***` y la propiedad `BEAMER_COL`. El texto, las listas y las ecuaciones se escriben en sintaxis Org; las directivas `#+LATEX` se reservan para macros de animación y pequeños ajustes de maquetación.
 - `presentacion.tex`: Beamer independiente, **ya compilado y verificado**.
-- `preamble.tex`: estilo y las macros `\AnimWide`, `\AnimSide`, `\AnimTitle`. Todos los videos se insertan mediante `\href{run:videos/archivo.mp4}{\includegraphics{...}}`.
+- `preamble.tex`: estilo y las macros `\AnimWide`, `\AnimSide`, `\AnimTitle`. Cada imagen de portada enlaza a su video con `?autostart`, por ejemplo `\href{run:videos/archivo.mp4?autostart}{\includegraphics{...}}`.
 - `source/original_excerpt.org`: fragmento original conservado sin modificaciones (como referencia).
 
 Para exportar el Org a LaTeX necesitas Emacs con Org/ox-beamer:
@@ -100,7 +100,7 @@ uv pip install --python .venv/bin/python Pillow
 python scripts/render_previews.py
 ```
 
-Este script es un renderizador de referencia ligero, **no sustituye a Manim**. Su propósito es que se pueda probar el PDF inmediatamente y contrastar las posiciones de los grafos con las de los guiones gráficos. También sobreescribe los MP4 y los pósteres.
+Este script es un renderizador de referencia ligero, **no sustituye a Manim**. Su propósito es que se pueda probar el PDF inmediatamente y contrastar las posiciones de los grafos con las de los guiones gráficos. También sobreescribe los MP4 y los pósteres, que representan el primer fotograma.
 
 ## Comprobaciones realizadas al preparar este ZIP
 

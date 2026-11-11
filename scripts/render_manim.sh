@@ -29,7 +29,7 @@ for item in "${scenes[@]}"; do
     exit 1
   fi
   cp "$found" "$ROOT/videos/$slug.mp4"
-  ffmpeg -hide_banner -loglevel error -y -sseof -0.1 \
+  ffmpeg -hide_banner -loglevel error -y \
     -i "$ROOT/videos/$slug.mp4" -frames:v 1 "$ROOT/posters/$slug.png"
 done
 echo 'All 16 Manim scenes rendered; use scripts/build_pdf.sh now.'

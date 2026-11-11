@@ -46,8 +46,7 @@ def mix(a,b,t):
 
 def render(slug, stages):
     imgs=[paint(s) for s in stages]
-    (ROOT/'posters'/f'{slug}.png').write_bytes(b'') if False else None
-    imgs[-1].save(ROOT/'posters'/f'{slug}.png', optimize=True)
+    imgs[0].save(ROOT/'posters'/f'{slug}.png', optimize=True)
     dest=ROOT/'videos'/f'{slug}.mp4'
     cmd=['ffmpeg','-hide_banner','-loglevel','error','-y','-f','rawvideo','-vcodec','rawvideo',
          '-pix_fmt','rgb24','-s',f'{W}x{H}','-r',str(FPS),'-i','-','-an','-c:v','libx264',

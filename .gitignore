@@ -7,3 +7,11 @@
 /posters/
 /source/__pycache__/
 /videos/
+/presentacion.aux
+/*.bcf
+/*.log
+/*.nav
+/*.out
+/presentacion.run.xml
+/*.snm
+/*.toc

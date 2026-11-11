@@ -67,7 +67,7 @@ Asegúrate de ejecutar estos comandos **desde la raíz** del proyecto. Para prob
 
 ## Editar y exportar el documento Org
 
-- `presentacion.org`: versión Org/Beamer editable. Cada encabezado `**` representa una diapositiva. Los bloques `#+begin_export latex` contienen el diseño de cada diapositiva, para que el documento Org y el `.tex` suministrado tengan una maquetación equivalente.
+- `presentacion.org`: versión Org/Beamer editable. Los encabezados `**` representan diapositivas y las columnas se construyen con subencabezados `***` y la propiedad `BEAMER_COL`. El texto, las listas y las ecuaciones se escriben en sintaxis Org; las directivas `#+LATEX` se reservan para macros de animación y pequeños ajustes de maquetación.
 - `presentacion.tex`: Beamer independiente, **ya compilado y verificado**.
 - `preamble.tex`: estilo y las macros `\AnimWide`, `\AnimSide`, `\AnimTitle`. Todos los videos se insertan mediante `\href{run:videos/archivo.mp4}{\includegraphics{...}}`.
 - `source/original_excerpt.org`: fragmento original conservado sin modificaciones (como referencia).

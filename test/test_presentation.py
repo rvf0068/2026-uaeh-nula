@@ -6,7 +6,7 @@ from collections import Counter
 from itertools import combinations
 from pathlib import Path
 
-from source.storyboards import CYAN, SCENE_NAMES, SUSP_CLIQUES, graphs, move, susp
+from source.storyboards import CYAN, SCENE_NAMES, SUSP_CLIQUES, graphs, move, octa, susp
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +37,28 @@ class PresentationScenesTest(unittest.TestCase):
             self.assertEqual(clique_graph['edges'], [['q0', 'q1']])
             self.assertEqual(clique_graph['pos']['q0'][0], clique_graph['pos']['q1'][0])
             self.assertLess(clique_graph['pos']['q0'][1], clique_graph['pos']['q1'][1])
+
+    def test_pyramid_stays_equilateral_in_all_stages(self):
+        stages = graphs()['piramide']
+        self.assertEqual(len(stages), 4)
+        positions = stages[0][0]['pos']
+        corners = [positions[vertex] for vertex in ('x0', 'x2', 'z0')]
+        sides = [math.dist(a, b) for a, b in combinations(corners, 2)]
+        for side in sides[1:]:
+            self.assertAlmostEqual(side, sides[0])
+        for vertex, a, b in (('x1', 'x0', 'x2'), ('y0', 'x0', 'z0'),
+                             ('y1', 'x2', 'z0')):
+            for value, start, end in zip(positions[vertex], positions[a], positions[b]):
+                self.assertAlmostEqual(value, (start + end) / 2)
+        for index, stage in enumerate(stages):
+            self.assertEqual(stage[0]['pos'], positions)
+            self.assertEqual(len(stage[0]['faces']), index)
+
+    def test_dominated_vertices_end_with_octahedron(self):
+        stages = graphs()['dominados']
+        self.assertEqual([len(stage) for stage in stages], [1, 1, 1])
+        self.assertEqual(set(stages[0][0]['pos']) - set(octa(3)['pos']), {'u', 'v'})
+        self.assertEqual(stages[-1][0], octa(3))
 
     def test_octahedron_iterates_stay_large_and_separate(self):
         stages = graphs()['iteradas_octaedro']

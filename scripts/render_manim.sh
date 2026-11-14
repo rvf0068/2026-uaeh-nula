@@ -16,8 +16,8 @@ scenes=(
   'Comportamiento:comportamiento'
   'IteradasOctaedro:iteradas_octaedro' 'RealizacionSimplicial:realizacion_simplicial'
   'TopologiaGraficas:topologia_graficas'
-  'Helly:helly' 'Piramide:piramide'
-  'Escalante:escalante' 'Desmantelables:desmantelables' 'Dominados:dominados'
+  'Piramide:piramide'
+  'Desmantelables:desmantelables' 'Dominados:dominados'
 )
 for item in "${scenes[@]}"; do
   scene="${item%%:*}"
@@ -41,4 +41,4 @@ for item in "${scenes[@]}"; do
   ffmpeg -hide_banner -loglevel error -y \
     -i "$ROOT/videos/$slug.mp4" -frames:v 1 "$ROOT/posters/$slug.png"
 done
-echo 'All 19 Manim scenes rendered; use scripts/build_pdf.sh now.'
+echo 'All 17 Manim scenes rendered; use scripts/build_pdf.sh now.'

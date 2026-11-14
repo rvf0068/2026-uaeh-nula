@@ -225,7 +225,7 @@ Por tanto \(O_n\) es divergente si \(n\ge3\). (Neumann-Lara, 1973.)
 #+end_center
 
 
-** Antecedentes: homotopía y el operador de clanes
+** Homotopía y el operador de clanes
 
 *** Prisner (1992)
 :PROPERTIES:
@@ -251,86 +251,75 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 * Topología y gráficas de clanes
 
 ** Gráficas Helly
-*** Definiciones
-:PROPERTIES:
-:BEAMER_COL: 0.60
-:END:
-#+LATEX: \SmallText
-Una colección \(\mathcal{C}\) de subconjuntos de \(X\) es *intersecante* si dos cualesquiera de sus miembros tienen intersección no vacía.
 
-Es *Helly* si toda subfamilia intersecante tiene intersección total no vacía.
-
-Una gráfica \(G\) es *Helly* si su colección de clanes satisface la propiedad de Helly.
-*** Animación
-:PROPERTIES:
-:BEAMER_COL: 0.38
-:END:
-#+LATEX: \centering\AnimSide{helly}
-
-** La pirámide y propiedad de Helly
 *** Resultados
 :PROPERTIES:
 :BEAMER_COL: 0.58
 :END:
-#+LATEX: \SmallText
-- La *pirámide* es la gráfica no Helly más pequeña.
-- Las gráficas sin triángulos son Helly. También lo son \(K_4\) y \(T_3\).
-- Existe un algoritmo polinomial que decide si una gráfica es Helly (Dragan, 1989; Szwarcfiter, 1997).
 
-En la animación se distinguen tres clanes que se intersectan dos a dos, pero no comparten un vértice común.
+#+ATTR_BEAMER: :overlay <+->
+- Una colección \(\mathcal{C}\) de subconjuntos de \(X\) es *intersecante* si dos cualesquiera de sus miembros tienen intersección no vacía.
+- Es *Helly* si toda subfamilia intersecante tiene intersección total no vacía.
+- Una gráfica \(G\) es *Helly* si su colección de clanes satisface la propiedad de Helly.
+- La *pirámide* es la gráfica no Helly más pequeña.
+
 *** Animación
 :PROPERTIES:
 :BEAMER_COL: 0.40
 :END:
-#+LATEX: \centering\AnimSide{piramide}
+#+LATEX: \centering\alt<+->{\AnimSide{piramide}}{\phantom{\AnimSidePoster{piramide}}}
+
+** 
+
+#+ATTR_BEAMER: :overlay <+->
+- Las gráficas sin triángulos son Helly. También lo son las gráficas completas y el prisma triangular.
+- Existe un algoritmo polinomial que decide si una gráfica es Helly (Dragan, 1989; Szwarcfiter, 1997).
+
 
 ** Teoremas de Escalante
-*** Resultados
-:PROPERTIES:
-:BEAMER_COL: 0.60
-:END:
-#+LATEX: \SmallText
+
+#+ATTR_BEAMER: :overlay <+->
 - (Escalante, 1973) Si \(G\) es Helly, entonces \(G\) es convergente.
 - (Escalante, 1973) Si \(G\) es Helly, \(K(G)\) es Helly.
-- Existen gráficas no Helly cuyo gráfico de clanes sí es Helly, como la pirámide.
-- De aquí se obtiene que toda gráfica de a lo sumo cinco vértices es convergente.
-*** Animación
-:PROPERTIES:
-:BEAMER_COL: 0.38
-:END:
-#+LATEX: \centering\AnimSide{escalante}
+- Corolario: Si \(G\) es Helly, entonces \(K^{n}(G)\simeq G\) para todo \(n\).
+- Existen gráficas no Helly cuyo gráfica de clanes sí es Helly, como la pirámide.
+- De aquí se obtiene que toda gráfica \(G\) tal que \(|G|\leq 5\) es convergente.
 
 ** Gráficas desmantelables
+
 *** Definiciones
 :PROPERTIES:
 :BEAMER_COL: 0.60
 :END:
-#+LATEX: \SmallText
-Un vértice \(x\) de \(G\) es *dominado* si existe \(y\) adyacente a \(x\) tal que todo vecino de \(x\) distinto de \(y\) es adyacente a \(y\).
 
-La gráfica \(G\) es *desmantelable* si puede reducirse a la gráfica de un solo vértice mediante remociones sucesivas de vértices dominados.
+#+ATTR_BEAMER: :overlay <+->
+- Un vértice \(x\) de \(G\) es *dominado* si existe \(y\) adyacente a \(x\) tal que todo vecino de \(x\) distinto de \(y\) es adyacente a \(y\).
+- La gráfica \(G\) es *desmantelable* si puede reducirse a la gráfica de un solo vértice mediante remociones sucesivas de vértices dominados.
+- Los árboles y las gráficas cordales conexas son desmantelables.
 
-Los árboles y las gráficas cordales conexas son desmantelables.
 *** Animación
 :PROPERTIES:
 :BEAMER_COL: 0.38
 :END:
-#+LATEX: \centering\AnimSide{desmantelables}
+#+LATEX: \centering\alt<+->{\AnimSide{desmantelables}}{\phantom{\AnimSidePoster{desmantelables}}}
 
 ** Teoremas sobre vértices dominados
+
 *** Resultados
 :PROPERTIES:
 :BEAMER_COL: 0.61
 :END:
-#+LATEX: \SmallText
-- (Prisner, 1992) Si \(G\) es desmantelable, existe \(n\) tal que \(K^n(G)\) es la gráfica de un vértice: \(G\) es *nula*.
+
+#+ATTR_BEAMER: :overlay <+->
+- (Prisner, 1992) Si \(G\) es desmantelable entonces \(G\) es nula.
 - (Frías-Armenta, Neumann-Lara, Pizaña, 2004) Si \(x\) es dominado en \(G\), entonces \(G\) y \(G-x\) tienen el mismo comportamiento.
 - Por ejemplo, el octaedro \(O_3\) con dos hojas adjuntas sigue siendo divergente.
+
 *** Animación
 :PROPERTIES:
 :BEAMER_COL: 0.37
 :END:
-#+LATEX: \centering\AnimSide{dominados}
+#+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
 
 # Local Variables:
 # ispell-dictionary: "castellano"

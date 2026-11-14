@@ -160,8 +160,10 @@ def ksusp():
 
 
 def pyramid():
-    p={'x0':(-2.65,-1.5),'x1':(-.75,-.2),'x2':(2.65,-1.5),
-       'y0':(-1.45,1.0),'y1':(1.45,1.0),'z0':(0,2.6)}
+    bottom=-1.5
+    top=bottom+5.3*sin(pi/3)
+    p={'x0':(-2.65,bottom),'x1':(0,bottom),'x2':(2.65,bottom),
+       'y0':(-1.325,(bottom+top)/2),'y1':(1.325,(bottom+top)/2),'z0':(0,top)}
     e=[('x0','x1'),('x1','x2'),('y0','y1'),('x0','y0'),('y0','z0'),
        ('z0','y1'),('y1','x2'),('y0','x1'),('x1','y1')]
     return graph(p,e)
@@ -253,18 +255,8 @@ def graphs():
     realization=move(frames['realizacion_simplicial'][-1][0],.72,-3.9,0)
     sphere=move(suspension_surface(),.85,3.55,0)
     frames['topologia_graficas']=[stage(realization),stage(realization,sphere)]
-    # 11. Family of maximal cliques in a star, sharing a vertex.
-    p={'z':(0,0),'a':(-2.8,1.5),'b':(2.8,1.5),'c':(0,-2.55)}
-    star_e=[('z','a'),('z','b'),('z','c')]
-    frames['helly']=[stage(graph(p,star_e)),
-        stage(graph(p,star_e,node_colors={'z':GOLD,'a':CYAN})),
-        stage(graph(p,star_e,node_colors={'z':GOLD,'a':CORAL,'b':CYAN,'c':MINT}))]
     # 12. The 'pyramid' counterexample to clique-Helly: 3 maximal cliques.
     frames['piramide']=[stage(pyramid()),stage(pyramid_face(1)),stage(pyramid_face(2)),stage(pyramid_face(3))]
-    # 13. Clique graph of pyramid is K4; second iterate singleton.
-    frames['escalante']=[stage(move(pyramid(),.72,-3.55,0)),
-        stage(move(pyramid(),.72,-3.55,0),move(complete(4),.70,2.3,0)),
-        stage(move(pyramid(),.57,-4.4,0),move(complete(4),.62,0,0),move(k1(),1.1,4.5,0))]
     # 14. Removing dominated vertices from a tree.
     p,e=tree_nodes()
     frames['desmantelables']=[stage(graph(p,e))]
@@ -276,8 +268,7 @@ def graphs():
     ee=octg['edges']+[('u','0'),('v','3')]
     frames['dominados']=[stage(graph(pp,ee,edge_opacity=.75)),
          stage(graph(pp,ee,node_colors={'u':CORAL,'v':CORAL},edge_opacity=.75)),
-         stage(octa(3)),
-         stage(move(octa(3),.75,-2.7,0),move(octa(4),.75,2.7,0))]
+         stage(octa(3))]
     return frames
 
 SCENE_NAMES = {
@@ -287,6 +278,6 @@ SCENE_NAMES = {
     'SuspensionC5':'suspension_c5','Comportamiento':'comportamiento',
     'IteradasOctaedro':'iteradas_octaedro','RealizacionSimplicial':'realizacion_simplicial',
     'TopologiaGraficas':'topologia_graficas',
-    'Helly':'helly','Piramide':'piramide',
-    'Escalante':'escalante','Desmantelables':'desmantelables','Dominados':'dominados'
+    'Piramide':'piramide',
+    'Desmantelables':'desmantelables','Dominados':'dominados'
 }

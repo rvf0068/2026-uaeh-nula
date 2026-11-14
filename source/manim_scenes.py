@@ -500,8 +500,6 @@ class TopologiaGraficas(_Storyboard):
         self.wait(2)
 
 
-class Helly(_Storyboard): key='helly'
 class Piramide(_Storyboard): key='piramide'
-class Escalante(_Storyboard): key='escalante'
 class Desmantelables(_Storyboard): key='desmantelables'
 class Dominados(_Storyboard): key='dominados'

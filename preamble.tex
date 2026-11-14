@@ -22,9 +22,10 @@
   \includegraphics[width=.97\linewidth,height=.60\textheight,keepaspectratio]{posters/#1.png}}
 \newcommand{\AnimWide}[1]{%
   \href{run:videos/#1.mp4?autostart}{\AnimWidePoster{#1}}}
+\newcommand{\AnimSidePoster}[1]{%
+  \includegraphics[width=\linewidth,height=.69\textheight,keepaspectratio]{posters/#1.png}}
 \newcommand{\AnimSide}[1]{%
-  \href{run:videos/#1.mp4?autostart}{%
-    \includegraphics[width=\linewidth,height=.69\textheight,keepaspectratio]{posters/#1.png}}}
+  \href{run:videos/#1.mp4?autostart}{\AnimSidePoster{#1}}}
 \newcommand{\AnimTitle}[1]{%
   \href{run:videos/#1.mp4?autostart}{%
     \includegraphics[width=.64\linewidth,height=.43\textheight,keepaspectratio]{posters/#1.png}}}

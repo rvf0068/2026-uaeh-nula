@@ -180,25 +180,39 @@ def graph_example(s,scale=1.,shift=(0,0)):
 
 
 def core_example(s,scale=1.,shift=(0,0)):
+    """A Tutte (barycentric) planar drawing of the spherical core.
+
+    Every face of a maximal planar graph can serve as the outer triangle.
+    Choose the embedding that best separates the vertices. This avoids
+    overlapping dots in the relatively narrow 16:9 Manim frames.
+    """
+    import numpy as np
     h,tris,_=sphere_core(graph6(s))
-    planar=nx.planar_layout(h,scale=2.25)
-    # Mark one outer face as unfilled, so its interior planar disk is visible.
-    embed=nx.check_planarity(h)[1]
-    seen=set(); faces=[]
-    for u,v in embed.edges():
-        if (u,v) in seen: continue
-        walk=embed.traverse_face(u,v)
-        for a,b in zip(walk,walk[1:]+walk[:1]): seen.add((a,b))
-        faces.append(tuple(walk))
-    assert len(faces)==12 and all(len(f)==3 for f in faces)
-    def area(face):
-        pts=[planar[v] for v in face]
-        return sum(pts[i][0]*pts[(i+1)%3][1]-pts[(i+1)%3][0]*pts[i][1]
-                   for i in range(3))/2
-    outside=max(faces,key=lambda f:abs(area(f)))
-    interior=[f for f in faces if f!=outside]
+    best=None
+    for face in sorted(tris,key=lambda q:tuple(sorted(q))):
+        outer=sorted(face)
+        inner=sorted(set(h)-set(outer))
+        idx={v:i for i,v in enumerate(inner)}
+        pos={outer[0]:(-2.,-1.4),outer[1]:(2.,-1.4),outer[2]:(0.,2.)}
+        m=np.zeros((len(inner),len(inner)))
+        rhs=np.zeros((len(inner),2))
+        for u in inner:
+            m[idx[u],idx[u]]=h.degree[u]
+            for v in h[u]:
+                if v in idx:
+                    m[idx[u],idx[v]]-=1
+                else:
+                    rhs[idx[u]]+=pos[v]
+        coords=np.linalg.solve(m,rhs)
+        pos.update({v:tuple(map(float,coords[idx[v]])) for v in inner})
+        gap=min(float(np.linalg.norm(np.subtract(pos[u],pos[v])))
+                for u,v in combinations(sorted(h),2))
+        if best is None or gap>best[0]:
+            best=(gap,pos,frozenset(outer))
+    _,pos,outer=best
+    interior=[tuple(sorted(t)) for t in tris if t!=outer]
     assert len(interior)==11
-    return model(h,planar,scale,shift,interior,node_size=.95)
+    return model(h,pos,scale,shift,interior,node_size=.82)
 
 
 def disc_example(scale=1.,shift=(0,0)):

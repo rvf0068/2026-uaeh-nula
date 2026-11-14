@@ -122,6 +122,24 @@ SUSP_CLIQUES = [
 ]
 
 
+def suspension_surface():
+    angle=.35
+    p={f'r{i}':(2.2*cos(pi/2+2*pi*i/5+.31),
+                 2.2*sin(pi/2+2*pi*i/5+.31)*sin(angle)) for i in range(5)}
+    p.update(t=(0,2.75*cos(angle)),b=(0,-2.75*cos(angle)))
+    faces=[]
+    for apex,color in (('t','#c9e6e5'),('b','#a7d4d5')):
+        for i in range(5):
+            a,b=f'r{i}',f'r{(i+1)%5}'
+            vertices=(a,b,apex) if apex=='t' else (b,a,apex)
+            (x0,y0),(x1,y1),(x2,y2)=(p[v] for v in vertices)
+            # The projected orientation culls faces on the far side.
+            if (x1-x0)*(y2-y0)-(y1-y0)*(x2-x0) <= 0:
+                continue
+            faces.append((vertices,color,.85))
+    return graph(p,susp()['edges'],faces)
+
+
 def ksusp():
     # q^+_i={t,r_i,r_(i+1)}, q^-_i={b,r_i,r_(i+1)}.
     # Same-level cliques all meet at an apex. Opposite-level cliques meet
@@ -216,9 +234,25 @@ def graphs():
              stage(move(complete(3),.55,-4.7,0),move(k1(),1,-2.8,0),move(octa(3),.52,1.0,0)),
              stage(move(complete(3),.55,-4.7,0),move(k1(),1,-2.8,0),move(octa(3),.52,1,0),move(octa(4),.47,4.7,0))]
     # 10. Order growth O3 -> O4 -> O8; latter has 16 vertices.
-    frames['iteradas_octaedro']=[stage(octa(3)),
-             stage(move(octa(3),.62,-3.8,0),move(octa(4),.65,3.3,0)),
-             stage(move(octa(3),.46,-4.7,0),move(octa(4),.46,0,0),move(octa(8),.55,4.6,0))]
+    o3=move(octa(3),1.05,-4.7,0)
+    o4=move(octa(4),1.05,0,0)
+    o8=move(octa(8),.84,4.7,0)
+    frames['iteradas_octaedro']=[stage(o3),stage(o3,o4),stage(o3,o4,o8)]
+    # Geometric realization: vertices, edges, then the filled triangle.
+    p={'1':(-2.2,1.8),'2':(-2.2,-1.8),'3':(.9,0),'4':(3.9,0)}
+    e=[('1','2'),('1','3'),('2','3'),('3','4')]
+    frames['realizacion_simplicial']=[
+        stage(graph(dict(list(p.items())[:count]))) for count in range(1,5)
+    ]
+    frames['realizacion_simplicial'] += [
+        stage(graph(p,e[:count])) for count in range(1,5)
+    ]
+    frames['realizacion_simplicial'].append(
+        stage(graph(p,e,[(('1','2','3'),CYAN,.28)]))
+    )
+    realization=move(frames['realizacion_simplicial'][-1][0],.72,-3.9,0)
+    sphere=move(suspension_surface(),.85,3.55,0)
+    frames['topologia_graficas']=[stage(realization),stage(realization,sphere)]
     # 11. Family of maximal cliques in a star, sharing a vertex.
     p={'z':(0,0),'a':(-2.8,1.5),'b':(2.8,1.5),'c':(0,-2.55)}
     star_e=[('z','a'),('z','b'),('z','c')]
@@ -251,6 +285,8 @@ SCENE_NAMES = {
     'GraficaDeClanes':'grafica_clanes','Iteradas':'iteradas',
     'PrismaClanes':'prisma_clanes','PrismaK23':'prisma_k23','Prisma':'prisma',
     'SuspensionC5':'suspension_c5','Comportamiento':'comportamiento',
-    'IteradasOctaedro':'iteradas_octaedro','Helly':'helly','Piramide':'piramide',
+    'IteradasOctaedro':'iteradas_octaedro','RealizacionSimplicial':'realizacion_simplicial',
+    'TopologiaGraficas':'topologia_graficas',
+    'Helly':'helly','Piramide':'piramide',
     'Escalante':'escalante','Desmantelables':'desmantelables','Dominados':'dominados'
 }

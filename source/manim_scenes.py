@@ -3,6 +3,8 @@
 Most slide text and formulas stay in Beamer; graph labels appear in the videos.
 The stage geometry is in storyboards.py and can be edited independently.
 """
+from itertools import combinations
+
 from manim import (
     Scene, Dot, Line, CubicBezier, Polygon, MathTex, Tex, TexTemplate, VGroup, FadeIn, FadeOut, AnimationGroup,
     LaggedStart, Create, config
@@ -330,24 +332,18 @@ class Graficas(_Storyboard):
         self.play(FadeOut(duplicate_edge),FadeOut(edge_cross))
 
 
-class Iteradas(_Storyboard):
-    key='iteradas'
+class _LabeledIterates(_Storyboard):
+    labels=()
+    label_y=-2.65
 
     def construct(self):
         models=graphs()[self.key][-1]
-        labels=(
-            r"\mathsf{G}",
-            r"\mathsf{K}\mathopen{\text{\sffamily (}}\mathsf{G}"
-            r"\mathclose{\text{\sffamily )}}",
-            r"\mathsf{K}^{2}\mathopen{\text{\sffamily (}}\mathsf{G}"
-            r"\mathclose{\text{\sffamily )}}",
-        )
         groups=[]
-        for model,label in zip(models,labels):
+        for model,label in zip(models,self.labels):
             xs=[x for x,_ in model['pos'].values()]
             graph_label=MathTex(
                 label,color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
-            ).scale(1.7).move_to(((min(xs)+max(xs))/2,-2.65,0))
+            ).scale(1.7).move_to(((min(xs)+max(xs))/2,self.label_y,0))
             groups.append(VGroup(visual_graph(model),graph_label))
 
         self.add(groups[0])
@@ -356,6 +352,17 @@ class Iteradas(_Storyboard):
         self.wait(.65)
         self.play(FadeIn(groups[2]),run_time=1.05)
         self.wait(1.15)
+
+
+class Iteradas(_LabeledIterates):
+    key='iteradas'
+    labels=(
+        r"\mathsf{G}",
+        r"\mathsf{K}\mathopen{\text{\sffamily (}}\mathsf{G}"
+        r"\mathclose{\text{\sffamily )}}",
+        r"\mathsf{K}^{2}\mathopen{\text{\sffamily (}}\mathsf{G}"
+        r"\mathclose{\text{\sffamily )}}",
+    )
 
 
 class _CliqueSteps(_Storyboard):
@@ -414,7 +421,85 @@ class Comportamiento(_Storyboard):
                 r'\sffamily '+label,color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
             ).scale(1.5).move_to((sum(centers)/len(centers),-2.55,0)))
         return result
-class IteradasOctaedro(_Storyboard): key='iteradas_octaedro'
+class IteradasOctaedro(_LabeledIterates):
+    key='iteradas_octaedro'
+    label_y=-3.0
+    labels=(
+        r"\mathsf{G}=\mathsf{O}_{3}",
+        r"\mathsf{K}\mathopen{\text{\sffamily (}}\mathsf{G}"
+        r"\mathclose{\text{\sffamily )}}",
+        r"\mathsf{K}^{2}\mathopen{\text{\sffamily (}}\mathsf{G}"
+        r"\mathclose{\text{\sffamily )}}",
+    )
+
+
+class RealizacionSimplicial(_Storyboard):
+    key='realizacion_simplicial'
+
+    def construct(self):
+        model=graphs()[self.key][-1][0]
+        faces,edges,dots=visual_graph(model)
+        labels=realization_vertex_labels(model)
+        self.add(dots[0],labels[0])
+        self.wait(.65)
+        for dot,label in zip(dots[1:],labels[1:]):
+            self.play(FadeIn(dot),FadeIn(label),run_time=.6)
+            self.wait(.35)
+        for edge in edges:
+            self.play(Create(edge),run_time=.6)
+            self.bring_to_front(dots,labels)
+            self.wait(.35)
+        face=faces[0].set_z_index(-1)
+        self.play(FadeIn(face),run_time=.7)
+        self.wait(1.5)
+
+
+def realization_vertex_labels(model):
+    offsets={'1':(-.15,.5),'2':(-.15,-.5),'3':(0,.5),'4':(0,.5)}
+    scale=model['node_size']
+    return VGroup(*(
+        MathTex(
+            vertex,color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
+        ).scale(1.2*scale).move_to((
+            x+offsets[vertex][0]*scale,y+offsets[vertex][1]*scale,0,
+        ))
+        for vertex,(x,y) in model['pos'].items()
+    ))
+
+
+class TopologiaGraficas(_Storyboard):
+    key='topologia_graficas'
+
+    def construct(self):
+        left,right=graphs()[self.key][-1]
+        left_group=VGroup(
+            visual_graph(left),
+            Tex(r'\sffamily Contraíble',color='#263445',
+                tex_template=LATIN_MODERN_TEMPLATE).scale(1.4).move_to((-3.3,-3.1,0)),
+        )
+        faces,edges,dots=visual_graph(right)
+        front_vertices={vertex for vertices,_,_ in right['faces'] for vertex in vertices}
+        front_edge_ids={frozenset(edge) for vertices,_,_ in right['faces']
+                        for edge in combinations(vertices,2)}
+        back_edges=VGroup(*(edge for ids,edge in zip(right['edges'],edges)
+                            if frozenset(ids) not in front_edge_ids))
+        front_edges=VGroup(*(edge for ids,edge in zip(right['edges'],edges)
+                             if frozenset(ids) in front_edge_ids))
+        back_dots=VGroup(*(dot for vertex,dot in zip(right['pos'],dots)
+                           if vertex not in front_vertices))
+        front_dots=VGroup(*(dot for vertex,dot in zip(right['pos'],dots)
+                            if vertex in front_vertices))
+        right_group=VGroup(
+            back_edges,back_dots,faces,front_edges,front_dots,
+            Tex(r'\sffamily Homotópica a $S^2$',color='#263445',
+                tex_template=LATIN_MODERN_TEMPLATE).scale(1.4).move_to((3.55,-3.1,0)),
+        )
+        self.add(left_group)
+        self.wait(1.5)
+        self.play(FadeIn(right_group),run_time=1)
+        self.wait(2)
+
+
 class Helly(_Storyboard): key='helly'
 class Piramide(_Storyboard): key='piramide'
 class Escalante(_Storyboard): key='escalante'

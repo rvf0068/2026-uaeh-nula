@@ -35,7 +35,7 @@ manim --version
 
 `uv` instala Python 3.12 si hace falta. El entorno queda en `.venv/`; para volver a usarlo en una terminal nueva, activa el entorno con `source .venv/bin/activate` desde la raíz del proyecto. Las dependencias del sistema indicadas arriba (en particular Cairo, Pango y FFmpeg) siguen siendo necesarias.
 
-## Renderizar los diecisiete videos con Manim
+## Renderizar los diecinueve videos con Manim
 
 ```bash
 source .venv/bin/activate
@@ -59,6 +59,12 @@ En las tres escenas del prisma se destacan sucesivamente sus cinco clanes, los s
 En `SuspensionC5` se resaltan por separado los diez clanes triangulares de la suspensión durante medio segundo cada uno, antes de mostrar su gráfica de clanes a la derecha. La suspensión mantiene sus polos alineados y gira el pentágono para distinguir sus triángulos; las capas pentagonales de la gráfica de clanes están alineadas y giradas para separar las aristas de los vértices no incidentes.
 
 En «Comportamiento», las definiciones se revelan una a una al avanzar y después aparece la animación; esta etiqueta como «Nula» la sucesión del triángulo y como «Divergente» la de los octaedros.
+
+En «Iteradas del octaedro», la animación aparece al avanzar después del texto y muestra sucesivamente \(G=O_3\), \(K(G)\) y \(K^2(G)\).
+
+En «Realización de \(\Delta_1\)», la escena `RealizacionSimplicial` construye la realización geométrica mostrando sucesivamente los cuatro vértices etiquetados, sus cuatro aristas y el triángulo relleno.
+
+En «Topología en gráficas», `TopologiaGraficas` compara la realización contraíble anterior con la superficie triangulada de la suspensión de \(C_5\), homotópica a \(S^2\).
 
 Ejemplo de Manim para una sola escena:
 

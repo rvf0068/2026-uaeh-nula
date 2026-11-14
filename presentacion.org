@@ -152,11 +152,10 @@ El prisma triangular es periódico bajo el operador de clanes:
 :END:
 #+LATEX: \centering\only<+->{\AnimSide{comportamiento}}
 
-* Teoremas sobre comportamiento
-
 ** Iteradas del octaedro
+
 #+begin_center
-Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces
+Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces:
 
 \[
 K(O_n)\cong O_{2^{n-1}}.
@@ -164,8 +163,68 @@ K(O_n)\cong O_{2^{n-1}}.
 
 Por tanto \(O_n\) es divergente si \(n\ge3\). (Neumann-Lara, 1973.)
 
-#+LATEX: \AnimWide{iteradas_octaedro}
+#+LATEX: \alt<2->{\AnimWide{iteradas_octaedro}}{\phantom{\AnimWidePoster{iteradas_octaedro}}}
 #+end_center
+
+* Complejos simpliciales
+
+** Complejos simpliciales
+
+#+ATTR_BEAMER: :overlay <+->
+- Los *complejos simpliciales* sirven para crear fácilmente un objeto topológico a partir de un objeto combinatorio.
+- Sea \(X\) un conjunto finito. Un *complejo simplicial* en \(X\) es una colección \(\Delta\) de subconjuntos de \(X\) cerrada bajo inclusión: si \(\sigma\in\Delta\) y \(\tau\subseteq\sigma\), entonces \(\tau\in\Delta\).
+- Los elementos de un complejo simplicial se llaman *simplejos*.
+- Si \(\sigma\) es un simplejo, su *dimensión* es \(\dim\sigma=|\sigma|-1\). Un simplejo de dimensión \(d\) se llama un *\(d\)-simplejo*.
+- Sean \(X=\{1,2,3,4\}\) y
+  \begin{equation*}
+   \begin{aligned}
+   \Delta_1=\{&\emptyset,\{1\},\{2\},\{3\},\{4\},\\
+           &\{1,2\},\{1,3\},\{2,3\},\{3,4\},\{1,2,3\}\}.
+   \end{aligned}
+   \end{equation*}
+   Entonces \(\Delta_1\) es un complejo simplicial.
+- La colección
+   \[
+   \Delta_2=\{\emptyset,\{1\},\{2\},\{2,3\}\}
+   \]
+   no es un complejo simplicial, pues \(\{2,3\}\in\Delta_2\), \(\{3\}\subseteq\{2,3\}\), pero \(\{3\}\notin\Delta_2\).
+
+** Espacio asociado
+
+#+ATTR_BEAMER: :overlay <+->
+- A cada complejo simplicial \(\Delta\) se le asocia (funtorialmente) un espacio topológico llamado su *realización geométrica*, que se denota \(|\Delta|\).
+- La realización geométrica se forma poniendo un punto en algún espacio \(\mathbb{R}^{N}\) adecuado por cada \(0\)-simplejo.
+- Después una línea entre los puntos correspondientes por cada \(1\)-simplejo.
+- Se rellenan los triángulos correspondientes a cada \(2\)-simplejo
+- Y así sucesivamente\dots
+
+** Realización de \(\Delta_1\)
+
+*** Simplejos
+:PROPERTIES:
+:BEAMER_COL: 0.50
+:END:
+
+- \(0\)-simplejos: \(\{1\},\{2\},\{3\},\{4\}\).
+- \(1\)-simplejos: \(\{1,2\},\{1,3\},\{2,3\},\{3,4\}\).
+- \(2\)-simplejos: \(\{1,2,3\}\).
+
+*** Animación
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:END:
+#+LATEX: \centering\AnimSide{realizacion_simplicial}
+
+** Topología en gráficas
+
+- Si \(G\) es una gráfica, se define \(\mathrm{Cl}(G)\) como el complejo simplicial cuyos simplejos son las subgráficas completas de \(G\). Denotamos a \(|\mathrm{Cl}(G)|\) como \(|G|\).
+- Por medio de \(|G|\) asociamos conceptos topológicos a \(G\). Por ejemplo, decimos que dos gráficas son homotópicas o que una gráfica es contraíble.
+
+#+begin_center
+#+LATEX: \alt<2->{\AnimWide{topologia_graficas}}{\phantom{\AnimWidePoster{topologia_graficas}}}
+#+end_center
+
+* Topología y gráficas de clanes
 
 ** Gráficas Helly
 *** Definiciones

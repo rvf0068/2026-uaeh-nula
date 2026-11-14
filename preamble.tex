@@ -18,9 +18,10 @@
 \setbeamersize{text margin left=7mm,text margin right=7mm}
 }{}
 \makeatother
+\newcommand{\AnimWidePoster}[1]{%
+  \includegraphics[width=.97\linewidth,height=.60\textheight,keepaspectratio]{posters/#1.png}}
 \newcommand{\AnimWide}[1]{%
-  \href{run:videos/#1.mp4?autostart}{%
-    \includegraphics[width=.97\linewidth,height=.60\textheight,keepaspectratio]{posters/#1.png}}}
+  \href{run:videos/#1.mp4?autostart}{\AnimWidePoster{#1}}}
 \newcommand{\AnimSide}[1]{%
   \href{run:videos/#1.mp4?autostart}{%
     \includegraphics[width=\linewidth,height=.69\textheight,keepaspectratio]{posters/#1.png}}}

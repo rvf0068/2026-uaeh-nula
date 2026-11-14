@@ -134,7 +134,7 @@ class _Storyboard(Scene):
         return visual_snapshot(snapshot)
 
     def construct(self):
-        stages=graphs()[self.key]
+        stages=graphs(self.key)[self.key]
         current=None
         for index, snapshot in enumerate(stages):
             nxt=self.make_snapshot(snapshot)
@@ -151,7 +151,7 @@ class Completas(_Storyboard):
     key='completas'
 
     def construct(self):
-        model=graphs()[self.key][0][0]
+        model=graphs(self.key)[self.key][0][0]
         self.add(visual_graph(model))
 
         examples=[
@@ -173,7 +173,7 @@ class Clanes(_Storyboard):
     key='clanes'
 
     def construct(self):
-        model=graphs()[self.key][0][0]
+        model=graphs(self.key)[self.key][0][0]
         self.add(visual_graph(model))
         first=complete_highlight(model,('0','1','4'),'#008c95',('#99d9dc',.28))
         second=complete_highlight(model,('0','1','2','3'),'#d1493f')
@@ -199,7 +199,7 @@ class GraficaDeClanes(_Storyboard):
     key='grafica_clanes'
 
     def construct(self):
-        stages=graphs()[self.key]
+        stages=graphs(self.key)[self.key]
         model=stages[0][0]
         clique_graph=stages[2][1]
         node_positions=clique_graph['pos']
@@ -262,7 +262,7 @@ class Graficas(_Storyboard):
     key='graficas'
 
     def construct(self):
-        wheel=graphs()[self.key][0][0]
+        wheel=graphs(self.key)[self.key][0][0]
         edge_model=wheel
         vertices=VGroup(*(
             Dot(point=(*position,0),radius=.25*wheel['node_size'],
@@ -337,7 +337,7 @@ class _LabeledIterates(_Storyboard):
     label_y=-2.65
 
     def construct(self):
-        models=graphs()[self.key][-1]
+        models=graphs(self.key)[self.key][-1]
         groups=[]
         for model,label in zip(models,self.labels):
             xs=[x for x,_ in model['pos'].values()]
@@ -372,7 +372,7 @@ class _CliqueSteps(_Storyboard):
     between_cliques_time=0
 
     def construct(self):
-        stages=graphs()[self.key]
+        stages=graphs(self.key)[self.key]
         model=stages[0][0]
         self.add(visual_graph(model))
         self.wait(.5)
@@ -437,7 +437,7 @@ class RealizacionSimplicial(_Storyboard):
     key='realizacion_simplicial'
 
     def construct(self):
-        model=graphs()[self.key][-1][0]
+        model=graphs(self.key)[self.key][-1][0]
         faces,edges,dots=visual_graph(model)
         labels=realization_vertex_labels(model)
         self.add(dots[0],labels[0])
@@ -471,7 +471,7 @@ class TopologiaGraficas(_Storyboard):
     key='topologia_graficas'
 
     def construct(self):
-        left,right=graphs()[self.key][-1]
+        left,right=graphs(self.key)[self.key][-1]
         left_group=VGroup(
             visual_graph(left),
             Tex(r'\sffamily Contraíble',color='#263445',
@@ -503,3 +503,9 @@ class TopologiaGraficas(_Storyboard):
 class Piramide(_Storyboard): key='piramide'
 class Desmantelables(_Storyboard): key='desmantelables'
 class Dominados(_Storyboard): key='dominados'
+
+# The new Manim scenes are defined separately to leave the finished first part intact.
+from segunda_parte_manim import (
+    BettiOctaedros, DiscoSuspension, RetractoOctaedro,
+    DosEjemplosS2, ColapsosS2, IteradasNulas,
+)

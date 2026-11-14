@@ -183,7 +183,12 @@ def tree_nodes():
     return p,e
 
 
-def graphs():
+def graphs(only=None):
+    """Build storyboards for all scenes or one requested scene.
+
+    Passing a scene key avoids expensive layouts/collapse computations for
+    unrelated scenes. With no key, callers still receive all storyboards.
+    """
     from copy import deepcopy
     frames={}
     # 0. A graphic on the title slide.
@@ -269,6 +274,62 @@ def graphs():
     frames['dominados']=[stage(graph(pp,ee,edge_opacity=.75)),
          stage(graph(pp,ee,node_colors={'u':CORAL,'v':CORAL},edge_opacity=.75)),
          stage(octa(3))]
+    # Manim launches separate processes for scenes: per-process caching alone
+    # does not prevent unrelated second-part computations during old renders.
+    def needs(key):
+        return only is None or only == key
+
+    if needs('betti_octaedros'):
+        frames['betti_octaedros'] = [
+            stage(move(octa(3), .78, -4.5, 0)),
+            stage(move(octa(3), .78, -4.5, 0),
+                  move(octa(4), .72, 0, 0)),
+            stage(move(octa(3), .78, -4.5, 0),
+                  move(octa(4), .72, 0, 0),
+                  move(octa(8), .66, 4.5, 0)),
+        ]
+
+    if needs('retracto_octaedro'):
+        frames['retracto_octaedro'] = [stage(octa(4))]
+
+    data_keys = {
+        'disco_suspension', 'dos_ejemplos_s2',
+        'colapsos_s2', 'iteradas_nulas',
+    }
+    if only is None or only in data_keys:
+        try:
+            from .segunda_parte_data import (
+                EXAMPLES, graph_example, core_example, disc_example,
+                suspension_example,
+            )
+        except ImportError:  # Manim imports storyboards as a top-level module
+            from segunda_parte_data import (
+                EXAMPLES, graph_example, core_example, disc_example,
+                suspension_example,
+            )
+
+        if needs('disco_suspension'):
+            dh = disc_example(.65, (-3.45, 0))
+            sg = suspension_example(.79, (3.5, 0))
+            frames['disco_suspension'] = [stage(dh), stage(dh, sg)]
+
+        if needs('dos_ejemplos_s2'):
+            a = graph_example(EXAMPLES[0], .92, (-3.5, 0))
+            b = graph_example(EXAMPLES[1], .92, (3.5, 0))
+            frames['dos_ejemplos_s2'] = [stage(a), stage(a, b)]
+
+        if needs('colapsos_s2'):
+            core_a = core_example(EXAMPLES[0], .87, (3.4, 0))
+            core_b = core_example(EXAMPLES[1], .87, (3.4, 0))
+            frames['colapsos_s2'] = [
+                stage(graph_example(EXAMPLES[0], .92, (-3.45, 0)), core_a),
+                stage(graph_example(EXAMPLES[1], .92, (-3.45, 0)), core_b),
+            ]
+
+        if needs('iteradas_nulas'):
+            a = graph_example(EXAMPLES[0], .92, (-3.5, 0))
+            b = graph_example(EXAMPLES[1], .92, (3.5, 0))
+            frames['iteradas_nulas'] = [stage(a), stage(a, b)]
     return frames
 
 SCENE_NAMES = {
@@ -279,5 +340,8 @@ SCENE_NAMES = {
     'IteradasOctaedro':'iteradas_octaedro','RealizacionSimplicial':'realizacion_simplicial',
     'TopologiaGraficas':'topologia_graficas',
     'Piramide':'piramide',
-    'Desmantelables':'desmantelables','Dominados':'dominados'
+    'Desmantelables':'desmantelables','Dominados':'dominados',
+    'BettiOctaedros':'betti_octaedros','DiscoSuspension':'disco_suspension',
+    'RetractoOctaedro':'retracto_octaedro','DosEjemplosS2':'dos_ejemplos_s2',
+    'ColapsosS2':'colapsos_s2','IteradasNulas':'iteradas_nulas'
 }

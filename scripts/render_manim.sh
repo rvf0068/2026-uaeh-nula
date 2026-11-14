@@ -18,11 +18,18 @@ scenes=(
   'TopologiaGraficas:topologia_graficas'
   'Piramide:piramide'
   'Desmantelables:desmantelables' 'Dominados:dominados'
+  'BettiOctaedros:betti_octaedros' 'DiscoSuspension:disco_suspension'
+  'RetractoOctaedro:retracto_octaedro' 'DosEjemplosS2:dos_ejemplos_s2'
+  'ColapsosS2:colapsos_s2' 'IteradasNulas:iteradas_nulas'
 )
 for item in "${scenes[@]}"; do
   scene="${item%%:*}"
   slug="${item#*:}"
   output_file="$slug"
+  # Optional comma-separated class names, e.g. MANIM_ONLY=DosEjemplosS2,ColapsosS2
+  if [[ -n "${MANIM_ONLY:-}" && ",${MANIM_ONLY}," != *",$scene,"* ]]; then
+    continue
+  fi
   fps_args=()
   if [[ "$scene" == "SuspensionC5" || "$scene" == "PrismaClanes" || "$scene" == "PrismaK23" ]]; then
     fps_args=(--fps 30)
@@ -41,4 +48,4 @@ for item in "${scenes[@]}"; do
   ffmpeg -hide_banner -loglevel error -y \
     -i "$ROOT/videos/$slug.mp4" -frames:v 1 "$ROOT/posters/$slug.png"
 done
-echo 'All 17 Manim scenes rendered; use scripts/build_pdf.sh now.'
+echo 'Manim render completed; use scripts/build_pdf.sh now.'

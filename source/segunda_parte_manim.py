@@ -131,7 +131,7 @@ class IteradasNulas(Scene):
         tiles=VGroup()
         for row,data in enumerate(values):
             y=1.15 if row==0 else -1.4
-            head=math_at('G_1' if row==0 else 'G_2',-6.05,y,.9)
+            head=math_at('G_1' if row==0 else 'G_2',-6.5,y,.9)
             rowgroup=VGroup(head)
             for j,count in enumerate(data):
                 tile=RoundedRectangle(width=2.2,height=1.22,corner_radius=.12,

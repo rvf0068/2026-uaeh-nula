@@ -50,7 +50,7 @@ def math_at(tex,x,y,scale=1):
 class BettiOctaedros(Scene):
     """O3 (S2) -> O4 (S3) -> O8 (S7), each with an increasing Betti degree."""
     def construct(self):
-        models=graphs()['betti_octaedros'][-1]
+        models=graphs('betti_octaedros')['betti_octaedros'][-1]
         x=[-4.5,0,4.5]
         labels=(r'O_3\simeq S^2',r'O_4\simeq S^3',r'O_8\simeq S^7')
         group=[VGroup(draw_model(m),math_at(t,xx,-2.85,.87))
@@ -65,7 +65,7 @@ class BettiOctaedros(Scene):
 class DiscoSuspension(Scene):
     """The actual nine-vertex disk H and its eleven-vertex suspension."""
     def construct(self):
-        h,s=graphs()['disco_suspension'][-1]
+        h,s=graphs('disco_suspension')['disco_suspension'][-1]
         left=VGroup(draw_model(h),math_at(r'H\simeq *',-3.45,-3,.96))
         right=VGroup(draw_model(s),math_at(r'G=\operatorname{Susp}(H)\simeq *',3.5,-3,.78))
         self.add(left);self.wait(1)
@@ -76,7 +76,7 @@ class DiscoSuspension(Scene):
 class RetractoOctaedro(Scene):
     """The O4 retract guaranteed by Theorem 3.1 of the 2008 paper."""
     def construct(self):
-        m=graphs()['retracto_octaedro'][-1][0]
+        m=graphs('retracto_octaedro')['retracto_octaedro'][-1][0]
         g=draw_model(m)
         self.add(g)
         self.wait(.65)
@@ -96,7 +96,7 @@ class RetractoOctaedro(Scene):
 
 class DosEjemplosS2(Scene):
     def construct(self):
-        a,b=graphs()['dos_ejemplos_s2'][-1]
+        a,b=graphs('dos_ejemplos_s2')['dos_ejemplos_s2'][-1]
         la=VGroup(draw_model(a),math_at('G_1',-3.5,-2.8,1.2))
         lb=VGroup(draw_model(b),math_at('G_2',3.5,-2.8,1.2))
         self.add(la);self.wait(.8)
@@ -107,7 +107,7 @@ class DosEjemplosS2(Scene):
 class ColapsosS2(Scene):
     """Two exact 20-collapse certificates, shown as spherical triangulations."""
     def construct(self):
-        stages=graphs()['colapsos_s2']
+        stages=graphs('colapsos_s2')['colapsos_s2']
         for i,(original,core) in enumerate(stages):
             old=VGroup(draw_model(original),math_at(f'G_{{{i+1}}}',-3.45,-3.1,1.1))
             new=VGroup(draw_model(core),math_at(r'\simeq S^2',3.4,-3.1,1.06))

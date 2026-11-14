@@ -35,7 +35,7 @@ manim --version
 
 `uv` instala Python 3.12 si hace falta. El entorno queda en `.venv/`; para volver a usarlo en una terminal nueva, activa el entorno con `source .venv/bin/activate` desde la raíz del proyecto. Las dependencias del sistema indicadas arriba (en particular Cairo, Pango y FFmpeg) siguen siendo necesarias.
 
-## Renderizar los diecisiete videos con Manim
+## Renderizar los videos con Manim (17 originales y 6 nuevos)
 
 ```bash
 source .venv/bin/activate

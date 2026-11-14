@@ -1,4 +1,3 @@
-import ast
 import math
 import re
 import unittest
@@ -18,18 +17,27 @@ class PresentationScenesTest(unittest.TestCase):
         slides = re.findall(r'\\Anim(?:Title|Side|Wide)\{([^}]+)\}', org)
         script = (ROOT / 'scripts/render_manim.sh').read_text(encoding='utf-8')
         scenes = re.findall(r"'([A-Za-z0-9]+):([a-z0-9_]+)'", script)
-        classes = {
-            node.name
-            for source in ('manim_scenes.py', 'segunda_parte_manim.py')
-            for node in ast.parse(
-                (ROOT / 'source' / source).read_text(encoding='utf-8')
-            ).body if isinstance(node, ast.ClassDef)
-        }
-
         self.assertEqual([slug for _, slug in scenes], slides)
         self.assertEqual(dict(scenes), SCENE_NAMES)
         self.assertEqual(set(graphs()), set(slides))
-        self.assertTrue(set(SCENE_NAMES) <= classes)
+
+    def test_registered_scenes_are_discoverable_in_their_manim_file(self):
+        from manim.utils.module_ops import get_module, get_scene_classes_from_module
+
+        script = (ROOT / 'scripts/render_manim.sh').read_text(encoding='utf-8')
+        for array, source in (('scenes', 'manim_scenes.py'),
+                              ('second_part_scenes', 'segunda_parte_manim.py')):
+            with self.subTest(source=source):
+                group = re.search(rf'^{array}=\(\n(.*?)^\)', script, re.MULTILINE | re.DOTALL)
+                self.assertIsNotNone(group)
+                names = re.findall(r"'([A-Za-z0-9]+):[a-z0-9_]+'", group.group(1))
+                discovered = {
+                    cls.__name__ for cls in get_scene_classes_from_module(
+                        get_module(ROOT / 'source' / source)
+                    )
+                }
+                self.assertTrue(set(names) <= discovered)
+                self.assertIn(f'render_scenes {source} "${{{array}[@]}}"', script)
 
 
     def test_requested_scene_skips_unrelated_second_part_calculations(self):

@@ -168,6 +168,7 @@ bash scripts/build_pdf.sh
 Los videos `videos/*.mp4` y pósteres `posters/*.png` se generan localmente
 y están excluidos del control de versiones. El código de las nuevas escenas
 se encuentra en `source/segunda_parte_manim.py`, con datos verificables en
-`source/segunda_parte_data.py`. Las primeras páginas PDF de Prisner (1992) y
+`source/segunda_parte_data.py`; el script selecciona el archivo de Manim
+correspondiente a cada escena. Las primeras páginas PDF de Prisner (1992) y
 Larrión–Neumann-Lara–Pizaña (2001) se mantienen intactas en `papers/`.
 

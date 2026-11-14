@@ -270,9 +270,14 @@ def graphs():
          stage(graph(pp,ee,node_colors={'u':CORAL,'v':CORAL},edge_opacity=.75)),
          stage(octa(3))]
     # Second part: independently verified examples and the disk of Fig. 2 (2008).
-    from segunda_parte_data import (
-        EXAMPLES, graph_example, core_example, disc_example, suspension_example,
-    )
+    try:
+        from .segunda_parte_data import (
+            EXAMPLES, graph_example, core_example, disc_example, suspension_example,
+        )
+    except ImportError:  # Manim runs storyboards as a top-level module
+        from segunda_parte_data import (
+            EXAMPLES, graph_example, core_example, disc_example, suspension_example,
+        )
     a=graph_example(EXAMPLES[0],.92,(-3.5,0))
     b=graph_example(EXAMPLES[1],.92,(3.5,0))
     core_a=core_example(EXAMPLES[0],.87,(3.4,0))

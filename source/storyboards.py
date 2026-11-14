@@ -269,6 +269,27 @@ def graphs():
     frames['dominados']=[stage(graph(pp,ee,edge_opacity=.75)),
          stage(graph(pp,ee,node_colors={'u':CORAL,'v':CORAL},edge_opacity=.75)),
          stage(octa(3))]
+    # Second part: independently verified examples and the disk of Fig. 2 (2008).
+    from segunda_parte_data import (
+        EXAMPLES, graph_example, core_example, disc_example, suspension_example,
+    )
+    a=graph_example(EXAMPLES[0],.92,(-3.5,0))
+    b=graph_example(EXAMPLES[1],.92,(3.5,0))
+    core_a=core_example(EXAMPLES[0],.87,(3.4,0))
+    core_b=core_example(EXAMPLES[1],.87,(3.4,0))
+    frames['betti_octaedros']=[stage(move(octa(3),.78,-4.5,0)),
+        stage(move(octa(3),.78,-4.5,0),move(octa(4),.72,0,0)),
+        stage(move(octa(3),.78,-4.5,0),move(octa(4),.72,0,0),move(octa(8),.66,4.5,0))]
+    dh=disc_example(.65,(-3.45,0))
+    sg=suspension_example(.79,(3.5,0))
+    frames['disco_suspension']=[stage(dh),stage(dh,sg)]
+    frames['retracto_octaedro']=[stage(octa(4))]
+    frames['dos_ejemplos_s2']=[stage(a),stage(a,b)]
+    frames['colapsos_s2']=[
+        stage(graph_example(EXAMPLES[0],.92,(-3.45,0)),core_a),
+        stage(graph_example(EXAMPLES[1],.92,(-3.45,0)),core_b),
+    ]
+    frames['iteradas_nulas']=[stage(a),stage(a,b)]
     return frames
 
 SCENE_NAMES = {
@@ -279,5 +300,8 @@ SCENE_NAMES = {
     'IteradasOctaedro':'iteradas_octaedro','RealizacionSimplicial':'realizacion_simplicial',
     'TopologiaGraficas':'topologia_graficas',
     'Piramide':'piramide',
-    'Desmantelables':'desmantelables','Dominados':'dominados'
+    'Desmantelables':'desmantelables','Dominados':'dominados',
+    'BettiOctaedros':'betti_octaedros','DiscoSuspension':'disco_suspension',
+    'RetractoOctaedro':'retracto_octaedro','DosEjemplosS2':'dos_ejemplos_s2',
+    'ColapsosS2':'colapsos_s2','IteradasNulas':'iteradas_nulas'
 }

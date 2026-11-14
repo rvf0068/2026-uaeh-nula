@@ -19,8 +19,10 @@ class PresentationScenesTest(unittest.TestCase):
         script = (ROOT / 'scripts/render_manim.sh').read_text(encoding='utf-8')
         scenes = re.findall(r"'([A-Za-z0-9]+):([a-z0-9_]+)'", script)
         classes = {
-            node.name for node in ast.parse(
-                (ROOT / 'source/manim_scenes.py').read_text(encoding='utf-8')
+            node.name
+            for source in ('manim_scenes.py', 'segunda_parte_manim.py')
+            for node in ast.parse(
+                (ROOT / 'source' / source).read_text(encoding='utf-8')
             ).body if isinstance(node, ast.ClassDef)
         }
 

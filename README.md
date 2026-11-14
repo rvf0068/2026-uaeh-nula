@@ -131,3 +131,43 @@ Este script es un renderizador de referencia ligero, **no sustituye a Manim**. S
 - Las escenas «Clanes» y «Gráfica de clanes» se renderizaron con Manim y se verificó la secuencia de énfasis, incluidos los colores divididos de la intersección.
 
 Documentación oficial: [Manim Community](https://docs.manim.community/) y [pdfpc](https://pdfpc.github.io/).
+
+
+## Segunda parte: nulidad y homotopía
+
+La segunda parte de `presentacion.org` conserva la sintaxis nativa de Org/Beamer
+y añade seis animaciones Manim Community. La sección se basa en los artículos
+de Prisner (1992), Larrión–Pizaña–Villarroel-Flores (2008) y
+*Equivariant collapses* (2008), disponibles en la Library del autor.
+
+Los ejemplos de diez vértices se identifican por sus cadenas graph6
+`ICvbvy}|g` y `IEivrzm}o`. Se comprueban sin leer archivos del censo:
+
+```bash
+uv pip install --python .venv/bin/python -r requirements.txt
+.venv/bin/python scripts/verify_s2_null.py
+python -m unittest discover -s test
+```
+
+La verificación construye los complejos de completas, registra 20 colapsos
+elementales hasta una superficie cerrada conexa con vector f=(8,18,12),
+y calcula K(G), K²(G), K³(G), eliminando luego vértices dominados de K³(G).
+Además reproduce las hipótesis del Teorema 3.1 de la publicación de 2008
+para el disco H (Figura 2) y su suspensión. El argumento de retracción al
+octaedro en K(Susp H) es el teorema publicado, no una hipótesis computacional.
+
+Para renderizar solo las nuevas animaciones, sin repetir las diecisiete escenas
+de la primera parte:
+
+```bash
+MANIM_ONLY=BettiOctaedros,DiscoSuspension,RetractoOctaedro,DosEjemplosS2,ColapsosS2,IteradasNulas bash scripts/render_manim.sh
+bash scripts/export_org.sh
+bash scripts/build_pdf.sh
+```
+
+Los videos `videos/*.mp4` y pósteres `posters/*.png` se generan localmente
+y están excluidos del control de versiones. El código de las nuevas escenas
+se encuentra en `source/segunda_parte_manim.py`, con datos verificables en
+`source/segunda_parte_data.py`. Las primeras páginas PDF de Prisner (1992) y
+Larrión–Neumann-Lara–Pizaña (2001) se mantienen intactas en `papers/`.
+

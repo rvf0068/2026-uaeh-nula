@@ -35,7 +35,7 @@ manim --version
 
 `uv` instala Python 3.12 si hace falta. El entorno queda en `.venv/`; para volver a usarlo en una terminal nueva, activa el entorno con `source .venv/bin/activate` desde la raíz del proyecto. Las dependencias del sistema indicadas arriba (en particular Cairo, Pango y FFmpeg) siguen siendo necesarias.
 
-## Renderizar los dieciséis videos con Manim
+## Renderizar los diecisiete videos con Manim
 
 ```bash
 source .venv/bin/activate
@@ -48,7 +48,17 @@ Por omisión usa `-ql` (calidad baja, para pruebas). Para calidad alta:
 MANIM_QUALITY=-qh bash scripts/render_manim.sh
 ```
 
-El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su primer fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y la animación editable de los 16 ejemplos. Los videos usan fondo blanco, vértices y aristas algo más grandes para integrarse mejor con las diapositivas. En la escena «Gráficas» aparece un grafo rueda planar de diez vértices y 18 aristas; después se ilustran un lazo (arista de un vértice a sí mismo) y una arista paralela con curvas, marcados como no permitidos. Las demás escenas muestran etapas sucesivas mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
+El script ejecuta Manim escena por escena, copia cada MP4 a `videos/` y extrae mediante `ffmpeg` su primer fotograma a `posters/`. **Sobrescribe** las previsualizaciones MP4 incluidas. Los archivos `source/storyboards.py` y `source/manim_scenes.py` contienen las geometrías y las animaciones editables. Los videos usan fondo blanco, vértices y aristas algo más grandes para integrarse mejor con las diapositivas. En la escena «Gráficas» aparece un grafo rueda planar de diez vértices y 18 aristas; después se ilustran un lazo (arista de un vértice a sí mismo) y una arista paralela con curvas, marcados como no permitidos. Las escenas generales muestran etapas sucesivas mediante fundidos; se pueden personalizar las transiciones en `_Storyboard.construct()`.
+
+En «Clanes» y «Gráfica de clanes», los dos clanes maximales se enfatizan por separado, con una pausa en el grafo normal entre ellos, y luego juntos. Los vértices y la arista compartidos se muestran en teal y rojo. En «Gráfica de clanes» los grafos están etiquetados \(G\) y \(K(G)\) en Latin Modern Sans, a juego con el texto de la presentación; las etiquetas grandes quedan alineadas bajo los grafos. \(K(G)\) aparece a la derecha, con su arista vertical y el vértice rojo debajo del teal.
+
+En «Gráficas iteradas de clanes», \(G\), \(K(G)\) y \(K^2(G)\) aparecen sucesivamente con sus etiquetas; la arista de \(K(G)\) es vertical.
+
+En las tres escenas del prisma se destacan sucesivamente sus cinco clanes, los seis clanes de \(K_{2,3}\) y la secuencia completa \(T_3\to K_{2,3}\to T_3\). Cada clan se destaca durante medio segundo; en el prisma se muestra primero el triángulo interior y luego el exterior. Las copias del prisma usan una representación planar con triángulos anidados, sin cruces ni solapamientos de aristas. Las escenas de Manim correspondientes son `PrismaClanes`, `PrismaK23` y `Prisma`.
+
+En `SuspensionC5` se resaltan por separado los diez clanes triangulares de la suspensión durante medio segundo cada uno, antes de mostrar su gráfica de clanes a la derecha. La suspensión mantiene sus polos alineados y gira el pentágono para distinguir sus triángulos; las capas pentagonales de la gráfica de clanes están alineadas y giradas para separar las aristas de los vértices no incidentes.
+
+En «Comportamiento», las definiciones se revelan una a una al avanzar y después aparece la animación; esta etiqueta como «Nula» la sucesión del triángulo y como «Divergente» la de los octaedros.
 
 Ejemplo de Manim para una sola escena:
 
@@ -91,6 +101,8 @@ bash scripts/build_pdf.sh
 
 Si modificas el contenido en el `.tex` en lugar del `.org`, **no ejecutes `export_org.sh`** sin guardar una copia: la exportación sobreescribe `presentacion.tex`.
 
+Para las previsualizaciones matemáticas de Org (`C-c C-x C-l`), `preamble.tex` omite los ajustes de Beamer cuando Org usa la clase `article`. Si Org desactivó la precompilación tras un error anterior, reabre el archivo o ejecuta `(setq-local org-latex-preview-process-precompile t)` y vuelve a generar las previsualizaciones.
+
 ## Regenerar únicamente las previsualizaciones sin Manim (opcional)
 
 Si tienes Pillow y ffmpeg:
@@ -108,6 +120,6 @@ Este script es un renderizador de referencia ligero, **no sustituye a Manim**. S
 - Se comprobó que **cada página tiene un enlace PDF `/Launch` a su video relativo**.
 - Se generaron **16 MP4 H.264** y **16 pósteres PNG** de previsualización.
 - `storyboards.py` y `manim_scenes.py` pasan la comprobación de sintaxis de Python; se comprobaron las referencias a vértices y aristas de todos los guiones.
-- **No fue posible ejecutar Manim aquí**, por no estar instalado ni disponible desde la red. Por tanto, el render exacto de Manim todavía debe probarse en el Ubuntu del usuario. El PDF y las previsualizaciones, en cambio, sí están generados.
+- Las escenas «Clanes» y «Gráfica de clanes» se renderizaron con Manim y se verificó la secuencia de énfasis, incluidos los colores divididos de la intersección.
 
 Documentación oficial: [Manim Community](https://docs.manim.community/) y [pdfpc](https://pdfpc.github.io/).

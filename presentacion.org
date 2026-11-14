@@ -29,6 +29,7 @@ Rafael Villarroel Flores, UAEH
 * El operador de clanes en gráficas
 
 ** Gráficas
+
 *** Definición
 :PROPERTIES:
 :BEAMER_COL: 0.53
@@ -44,9 +45,11 @@ La cantidad de vértices de la gráfica \(G\) se llama el *orden* de \(G\) y lo 
 :PROPERTIES:
 :BEAMER_COL: 0.45
 :END:
+
 #+LATEX: \centering\AnimSide{graficas}
 
 ** Completas
+
 #+begin_center
 Una *completa* de una gráfica es un conjunto de vértices mutuamente adyacentes.
 
@@ -54,6 +57,7 @@ Una *completa* de una gráfica es un conjunto de vértices mutuamente adyacentes
 #+end_center
 
 ** Clanes
+
 #+begin_center
 Un *clan* de una gráfica es una completa maximal bajo inclusión.
 
@@ -61,31 +65,39 @@ Un *clan* de una gráfica es una completa maximal bajo inclusión.
 #+end_center
 
 ** Gráfica de clanes
+
 *** Definición
 :PROPERTIES:
-:BEAMER_COL: 0.57
+:BEAMER_COL: 0.4
 :END:
-#+LATEX: \SmallText
+
 Dada una gráfica \(G\), su *gráfica de clanes \(K(G)\)* es la gráfica de intersección de sus clanes.
 
-Identificamos cada clan \(q\) con un vértice de \(K(G)\):
+#+latex: \bigskip
 
-- \(q\in K(G)\) si y sólo si \(q\) es un clan de \(G\).
-- Para clanes distintos \(q,q'\), hay arista \(qq'\) en \(K(G)\) si y sólo si \(q\cap q'\ne\varnothing\).
+Cada clan \(q\) es un vértice de \(K(G)\):
+
+#+latex: \bigskip
+
+Dos clanes distintos \(q,q'\), son adyacentes en \(K(G)\) si y sólo si \(q\cap q'\ne\varnothing\).
+
 *** Animación
 :PROPERTIES:
-:BEAMER_COL: 0.41
+:BEAMER_COL: 0.58
 :END:
 #+LATEX: \centering\AnimSide{grafica_clanes}
 
-** Ejemplo
-#+begin_center
-Dos clanes maximales de \(G\) se convierten en dos vértices adyacentes de \(K(G)\).
+** Suspensión de \(C_5\)
 
-#+LATEX: \AnimWide{ejemplo}
+#+begin_center
+Sea \(G\) la suspensión del ciclo de cinco vértices \(C_5\).
+A la izquierda, \(G\); a la derecha, \(K(G)\).
+
+#+LATEX: \AnimWide{suspension_c5}
 #+end_center
 
 ** Gráficas iteradas de clanes
+
 #+begin_center
 La sucesión de *gráficas iteradas de clanes* se define mediante
 
@@ -96,39 +108,49 @@ K^{0}(G)=G,\qquad K^{n}(G)=K\bigl(K^{n-1}(G)\bigr),\quad n\ge 1.
 #+LATEX: \AnimWide{iteradas}
 #+end_center
 
-** Prisma
+** Los clanes del prisma
 #+begin_center
-El prisma triangular \(T_3\) y su gráfica de clanes \(K(T_3)\).
+El prisma triangular \(T_3\) tiene cinco clanes: dos triángulos y tres aristas.
+
+#+LATEX: \AnimWide{prisma_clanes}
+#+end_center
+
+** Los clanes de \(K_{2,3}\)
+#+begin_center
+Los seis clanes de \(K_{2,3}\) son sus aristas.
+
+#+LATEX: \AnimWide{prisma_k23}
+#+end_center
+
+** Iteradas del prisma
+#+begin_center
+El prisma triangular es periódico bajo el operador de clanes:
 
 #+LATEX: \AnimWide{prisma}
 
-En este caso, \(K^2(T_3)\cong T_3\).
-#+end_center
-
-** Suspensión de \(C_5\)
-#+begin_center
-Sea \(G\) la suspensión del ciclo de cinco vértices \(C_5\).
-A la izquierda, \(G\); a la derecha, \(K(G)\).
-
-#+LATEX: \AnimWide{suspension_c5}
+\(T_3 \longrightarrow K_{2,3} \longrightarrow T_3\).
 #+end_center
 
 ** Comportamiento
+
 *** Definiciones
 :PROPERTIES:
 :BEAMER_COL: 0.60
 :END:
-#+LATEX: \SmallText
-- \(G\) es *convergente* si la sucesión \(|K^n(G)|\) es acotada.
-- Equivale a que \(G,K(G),K^2(G),\ldots\) tenga sólo una cantidad finita de términos distintos salvo isomorfismo.
-- Equivale a que \(K^m(G)\cong K^n(G)\) para algunos \(m<n\).
-- Si \(G\) no es convergente, es *divergente*.
+
+#+ATTR_BEAMER: :overlay <+->
+- Se dice que \(G\) es *convergente* si la sucesión de órdenes \(\{|K^n(G)|\}\) es acotada.
+- Esto equivale a que \(G,K(G),K^2(G),\ldots\) tenga sólo una cantidad finita de términos distintos salvo isomorfismo.
+- También equivale a que \(K^m(G)\cong K^n(G)\) para algunos \(m<n\).
+- En el caso de que \(|K^{n}(G)|=1\) para alguna \(n\), se dice que \(G\) es *nula*.
+- Si \(G\) no es convergente, se dice es *divergente*.
 - Decidir el comportamiento es un problema central del área.
+
 *** Animación
 :PROPERTIES:
 :BEAMER_COL: 0.38
 :END:
-#+LATEX: \centering\AnimSide{comportamiento}
+#+LATEX: \centering\only<+->{\AnimSide{comportamiento}}
 
 * Teoremas sobre comportamiento
 
@@ -226,3 +248,7 @@ Los árboles y las gráficas cordales conexas son desmantelables.
 :BEAMER_COL: 0.37
 :END:
 #+LATEX: \centering\AnimSide{dominados}
+
+# Local Variables:
+# ispell-dictionary: "castellano"
+# End:

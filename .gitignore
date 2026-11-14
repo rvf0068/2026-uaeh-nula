@@ -15,3 +15,4 @@
 /presentacion.run.xml
 /*.snm
 /*.toc
+/test/__pycache__/

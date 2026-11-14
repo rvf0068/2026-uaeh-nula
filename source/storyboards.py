@@ -55,7 +55,7 @@ def house(faces=(), edge_count=None):
     return graph(house_pos(), edges if edge_count is None else edges[:edge_count], faces)
 
 
-def k2(): return graph({'q0':(-.55,0),'q1':(.55,0)}, [('q0','q1')], node_colors={'q0':CORAL,'q1':CYAN})
+def k2(): return graph({'q0':(0,-.55),'q1':(0,.55)}, [('q0','q1')], node_colors={'q0':CORAL,'q1':CYAN})
 def k1(): return graph({'v':(0,0)}, [], node_colors={'v':GOLD}, node_size=1.4)
 
 
@@ -78,8 +78,8 @@ def prism():
     p={}
     for i in range(3):
         a=pi/2+2*pi*i/3
-        p[str(i)]=(-1.65+1.08*cos(a),1.08*sin(a))
-        p[str(i+3)]=(1.65+1.08*cos(a),1.08*sin(a))
+        p[str(i)]=(2.2*cos(a),2.2*sin(a))
+        p[str(i+3)]=(.95*cos(a),.95*sin(a))
     e=list(combinations('012',2))+list(combinations('345',2))+[(str(i),str(i+3)) for i in range(3)]
     return graph(p,e)
 
@@ -89,12 +89,37 @@ def k23():
     return graph(p, [(a,b) for a in ('a','b') for b in ('u','v','w')], node_colors={'a':CORAL,'b':CORAL,'u':CYAN,'v':CYAN,'w':CYAN})
 
 
+PRISM_CLIQUES = [
+    (('3','4','5'),CORAL,('#f0aaa4',.28)),
+    (('0','1','2'),CORAL,('#f0aaa4',.28)),
+    *[((str(i),str(i+3)),CYAN,None) for i in range(3)],
+]
+K23_CLIQUES = [((a,b),GOLD,None) for a in ('a','b') for b in ('u','v','w')]
+
+
+def clique_stage(model, vertices, color, face):
+    vertex_set=set(vertices)
+    edges=[(a,b) for a,b in model['edges'] if a in vertex_set and b in vertex_set]
+    faces=[(vertices,*face)] if face else []
+    highlight=graph({v:model['pos'][v] for v in vertices},edges,faces,
+                    node_colors={v:color for v in vertices},edge_color=color,
+                    edge_opacity=1,node_size=1.44*model['node_size'])
+    return stage(model,highlight)
+
+
 def susp():
-    p={f'r{i}':(1.55*cos(pi/2+2*pi*i/5),.85*sin(pi/2+2*pi*i/5)) for i in range(5)}
-    p.update(t=(0,2.55),b=(0,-2.55))
+    p={f'r{i}':(2.2*cos(pi/2+2*pi*i/5+.31),1.05*sin(pi/2+2*pi*i/5+.31)) for i in range(5)}
+    p.update(t=(0,2.75),b=(0,-2.75))
     e=[(f'r{i}',f'r{(i+1)%5}') for i in range(5)]
     e += [(a,f'r{i}') for a in ('t','b') for i in range(5)]
     return graph(p,e,node_colors={'t':CORAL,'b':CYAN})
+
+
+SUSP_CLIQUES = [
+    ((apex,f'r{i}',f'r{(i+1)%5}'),color,(face_color,.28))
+    for apex,color,face_color in (('t',CORAL,'#f0aaa4'),('b',CYAN,'#99d9dc'))
+    for i in range(5)
+]
 
 
 def ksusp():
@@ -103,9 +128,10 @@ def ksusp():
     # precisely when their rim edges share one of their two endpoints.
     p={}
     for i in range(5):
-        theta=pi/2+2*pi*i/5
-        p[f't{i}']=(1.6*cos(theta),1.55+0.7*sin(theta))
-        p[f'b{i}']=(1.6*cos(theta),-1.55+0.7*sin(theta))
+        theta=.44+2*pi*i/5
+        x,y=2.4*cos(theta),1.6*sin(theta)
+        p[f't{i}']=(x,1.7+y)
+        p[f'b{i}']=(x,-1.7+y)
     e=[]
     for prefix in ('t','b'):
         e += [(f'{prefix}{i}',f'{prefix}{j}') for i,j in combinations(range(5),2)]
@@ -154,22 +180,36 @@ def graphs():
     # 3. Maximal completes only, not arbitrary complete subsets.
     frames['clanes']=[stage(h),stage(house([(('0','1','4'),CYAN,.27)])),
                       stage(house([(('0','1','4'),CYAN,.23),(('0','1','2','3'),CORAL,.21)]))]
-    # 4-5. Clique graph of the house: K2.
+    # Clique graph of the house: K2.
     left=move(h,.82,-3.45,0)
     right=move(k2(),1.5,3.4,0)
     frames['grafica_clanes']=[stage(left),stage(move(house([(('0','1','4'),CYAN,.28)]),.82,-3.45,0)),
                               stage(move(house([(('0','1','4'),CYAN,.21),(('0','1','2','3'),CORAL,.20)]),.82,-3.45,0),right)]
-    frames['ejemplo']=[stage(left),stage(move(house([(('0','1','2','3'),CORAL,.25)]),.82,-3.45,0)),
-                       stage(move(house([(('0','1','4'),CYAN,.25)]),.82,-3.45,0)),
-                       stage(left,right)]
     # 6. Repeated clique graphs: house -> K2 -> K1.
     g1=move(h,.63,-4.1,0); g2=move(k2(),1.25,0,0); g3=move(k1(),1.0,3.95,0)
     frames['iteradas']=[stage(g1),stage(g1,g2),stage(g1,g2,g3)]
-    # 7. Triangular prism -> K_{2,3} -> triangular prism.
+    # 7. The two clique-graph steps and their complete sequence.
+    prism_left=move(prism(),.68,-3.45,0)
+    k23_right=move(k23(),.70,3.4,0)
+    k23_left=move(k23(),.85,-3.45,0)
+    prism_right=move(prism(),.68,3.4,0)
+    frames['prisma_clanes']=[stage(prism_left)]
+    for clique in PRISM_CLIQUES:
+        frames['prisma_clanes'].extend([clique_stage(prism_left,*clique),stage(prism_left)])
+    frames['prisma_clanes'].append(stage(prism_left,k23_right))
+    frames['prisma_k23']=[stage(k23_left)]
+    for clique in K23_CLIQUES:
+        frames['prisma_k23'].extend([clique_stage(k23_left,*clique),stage(k23_left)])
+    frames['prisma_k23'].append(stage(k23_left,prism_right))
     frames['prisma']=[stage(prism()),stage(move(prism(),.68,-3.45,0),move(k23(),.70,3.4,0)),
                       stage(move(prism(),.53,-4.5,0),move(k23(),.62,0,0),move(prism(),.53,4.5,0))]
     # 8. Suspension of C5 -> 10-vertex clique graph.
-    frames['suspension_c5']=[stage(susp()),stage(move(susp(),.72,-3.55,0),move(ksusp(),.78,3.35,0))]
+    susp_left=move(susp(),.98,-3.45,0)
+    susp_right=move(ksusp(),1.,3.35,0)
+    frames['suspension_c5']=[stage(susp_left)]
+    for clique in SUSP_CLIQUES:
+        frames['suspension_c5'].extend([clique_stage(susp_left,*clique),stage(susp_left)])
+    frames['suspension_c5'].append(stage(susp_left,susp_right))
     # 9. Convergent and divergent examples; stage across horizontal layout.
     frames['comportamiento']=[stage(move(complete(3),.70,-3.6,0)),
              stage(move(complete(3),.70,-3.6,0),move(k1(),1.1,-1.7,0)),
@@ -208,8 +248,9 @@ def graphs():
 
 SCENE_NAMES = {
     'Intro':'intro','Graficas':'graficas','Completas':'completas','Clanes':'clanes',
-    'GraficaDeClanes':'grafica_clanes','Ejemplo':'ejemplo','Iteradas':'iteradas',
-    'Prisma':'prisma','SuspensionC5':'suspension_c5','Comportamiento':'comportamiento',
+    'GraficaDeClanes':'grafica_clanes','Iteradas':'iteradas',
+    'PrismaClanes':'prisma_clanes','PrismaK23':'prisma_k23','Prisma':'prisma',
+    'SuspensionC5':'suspension_c5','Comportamiento':'comportamiento',
     'IteradasOctaedro':'iteradas_octaedro','Helly':'helly','Piramide':'piramide',
     'Escalante':'escalante','Desmantelables':'desmantelables','Dominados':'dominados'
 }

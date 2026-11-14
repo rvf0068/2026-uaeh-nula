@@ -1,17 +1,20 @@
-"""16 editable Manim Community scenes, one for each Beamer frame.
+"""Editable Manim Community scenes, one for each Beamer frame.
 
-This deliberately keeps text and formulas in Beamer, not in the videos. The
-stage geometry is in storyboards.py and can be edited independently.
+Most slide text and formulas stay in Beamer; graph labels appear in the videos.
+The stage geometry is in storyboards.py and can be edited independently.
 """
 from manim import (
-    Scene, Dot, Line, CubicBezier, Polygon, VGroup, FadeIn, FadeOut, AnimationGroup,
+    Scene, Dot, Line, CubicBezier, Polygon, MathTex, Tex, TexTemplate, VGroup, FadeIn, FadeOut, AnimationGroup,
     LaggedStart, Create, config
 )
 import numpy as np
-from storyboards import graphs, SCENE_NAMES, BG, CYAN
+from storyboards import graphs, SCENE_NAMES, BG, CYAN, PRISM_CLIQUES, K23_CLIQUES, SUSP_CLIQUES
 
 config.background_color = BG
 INVALID_COLOR = '#c62828'
+LATIN_MODERN_TEMPLATE = TexTemplate()
+LATIN_MODERN_TEMPLATE.add_to_preamble(r'\usepackage[T1]{fontenc}')
+LATIN_MODERN_TEMPLATE.add_to_preamble(r'\usepackage{lmodern}')
 
 
 def visual_graph(model):
@@ -67,13 +70,72 @@ def complete_highlight(model, vertices, color, face=None, omit_vertices=(), omit
     return highlights
 
 
+def combined_complete_highlight(
+    model, first_vertices, first_color, second_vertices, second_color,
+    shared_vertices, shared_edges, first_face=None,
+):
+    shared_vertices=set(shared_vertices)
+    shared_edge_sets={frozenset(edge) for edge in shared_edges}
+    first=complete_highlight(
+        model,first_vertices,first_color,first_face,
+        omit_vertices=shared_vertices,omit_edges=shared_edge_sets,
+    )
+    second=complete_highlight(
+        model,second_vertices,second_color,
+        omit_vertices=shared_vertices,omit_edges=shared_edge_sets,
+    )
+
+    split_edges=VGroup()
+    for start,end in shared_edges:
+        left=np.array((*model['pos'][start],0))
+        right=np.array((*model['pos'][end],0))
+        direction=(right-left)/np.linalg.norm(right-left)
+        normal=np.array([-direction[1],direction[0],0])
+        if normal[1] < 0:
+            normal=-normal
+        half_width=.1
+        split_edges.add(
+            Polygon(
+                left+normal*half_width,right+normal*half_width,right,left,
+                color=first_color,stroke_width=0,
+                fill_color=first_color,fill_opacity=1,
+            ),
+            Polygon(
+                left,right,right-normal*half_width,left-normal*half_width,
+                color=second_color,stroke_width=0,
+                fill_color=second_color,fill_opacity=1,
+            ),
+        )
+
+    split_vertices=VGroup()
+    radius=.36*model['node_size']
+    for vertex in shared_vertices:
+        center=np.array((*model['pos'][vertex],0))
+        for start_angle,end_angle,color in (
+            (0,np.pi,first_color),
+            (np.pi,2*np.pi,second_color),
+        ):
+            angles=np.linspace(start_angle,end_angle,25)
+            arc=[center+radius*np.array([np.cos(angle),np.sin(angle),0])
+                 for angle in angles]
+            split_vertices.add(Polygon(
+                center,*arc,color=color,stroke_color=color,stroke_width=0,
+                fill_color=color,fill_opacity=1,
+            ))
+    return VGroup(first,second,split_edges,split_vertices)
+
+
 class _Storyboard(Scene):
     key=None
+
+    def make_snapshot(self, snapshot):
+        return visual_snapshot(snapshot)
+
     def construct(self):
         stages=graphs()[self.key]
         current=None
         for index, snapshot in enumerate(stages):
-            nxt=visual_snapshot(snapshot)
+            nxt=self.make_snapshot(snapshot)
             if current is None:
                 self.add(nxt)
             else:
@@ -113,8 +175,6 @@ class Clanes(_Storyboard):
         self.add(visual_graph(model))
         first=complete_highlight(model,('0','1','4'),'#008c95',('#99d9dc',.28))
         second=complete_highlight(model,('0','1','2','3'),'#d1493f')
-        shared_vertices=('0','1')
-        shared_edges=(('0','1'),)
 
         self.play(FadeIn(first))
         self.wait(2)
@@ -124,52 +184,75 @@ class Clanes(_Storyboard):
         self.wait(2)
         self.play(FadeOut(second))
         self.wait(.5)
-        left, right = (np.array((*model['pos'][vertex], 0)) for vertex in shared_vertices)
-        edge_direction=(right-left)/np.linalg.norm(right-left)
-        edge_normal=np.array([-edge_direction[1],edge_direction[0],0])
-        edge_half_width=.1
-        edge_halves=VGroup(
-            Polygon(
-                left+edge_normal*edge_half_width,
-                right+edge_normal*edge_half_width,
-                right, left,
-                color='#008c95',stroke_width=0,fill_color='#008c95',fill_opacity=1,
-            ),
-            Polygon(
-                left, right,
-                right-edge_normal*edge_half_width,
-                left-edge_normal*edge_half_width,
-                color='#d1493f',stroke_width=0,fill_color='#d1493f',fill_opacity=1,
-            ),
-        )
-        split_vertices=VGroup()
-        radius=.36*model['node_size']
-        for vertex in shared_vertices:
-            center=np.array((*model['pos'][vertex],0))
-            for start_angle,end_angle,color in (
-                (0,np.pi,'#008c95'),
-                (np.pi,2*np.pi,'#d1493f'),
-            ):
-                angles=np.linspace(start_angle,end_angle,25)
-                arc=[center+radius*np.array([np.cos(angle),np.sin(angle),0])
-                     for angle in angles]
-                split_vertices.add(Polygon(
-                    center,*arc,color=color,stroke_color=color,stroke_width=0,
-                    fill_color=color,fill_opacity=1,
-                ))
-        combined=VGroup(
-            complete_highlight(
-                model,('0','1','4'),'#008c95',('#99d9dc',.28),
-                omit_vertices=shared_vertices,omit_edges=shared_edges,
-            ),
-            complete_highlight(
-                model,('0','1','2','3'),'#d1493f',
-                omit_vertices=shared_vertices,omit_edges=shared_edges,
-            ),
-            edge_halves,
-            split_vertices,
+        combined=combined_complete_highlight(
+            model,('0','1','4'),'#008c95',
+            ('0','1','2','3'),'#d1493f',
+            ('0','1'),(('0','1'),),('#99d9dc',.28),
         )
         self.play(FadeIn(combined))
+        self.wait(2)
+
+
+class GraficaDeClanes(_Storyboard):
+    key='grafica_clanes'
+
+    def construct(self):
+        stages=graphs()[self.key]
+        model=stages[0][0]
+        clique_graph=stages[2][1]
+        node_positions=clique_graph['pos']
+        center_x=np.mean([position[0] for position in node_positions.values()])
+        half_distance=np.linalg.norm(
+            np.array(node_positions['q1'])-np.array(node_positions['q0'])
+        )/2
+        clique_graph=dict(clique_graph,pos={
+            'q0':(center_x,-half_distance),
+            'q1':(center_x,half_distance),
+        })
+        graph_label=MathTex(
+            r"\mathsf{G}",color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
+        ).scale(2).move_to((
+            (min(x for x,_ in model['pos'].values())+
+             max(x for x,_ in model['pos'].values()))/2,
+            -2.65,
+            0,
+        ))
+        self.add(visual_graph(model))
+        self.add(graph_label)
+
+        first=complete_highlight(model,('0','1','4'),'#008c95',('#99d9dc',.28))
+        second=complete_highlight(model,('0','1','2','3'),'#d1493f')
+        self.play(FadeIn(first))
+        self.wait(2)
+        self.play(FadeOut(first))
+        self.wait(.5)
+        self.play(FadeIn(second))
+        self.wait(2)
+        self.play(FadeOut(second))
+        self.wait(.5)
+
+        combined=combined_complete_highlight(
+            model,('0','1','4'),'#008c95',
+            ('0','1','2','3'),'#d1493f',
+            ('0','1'),(('0','1'),),('#99d9dc',.28),
+        )
+        self.play(FadeIn(combined))
+        self.wait(2)
+
+        right_graph=visual_graph(clique_graph)
+        vertices=right_graph[2]
+        edges=right_graph[1]
+        clique_label=MathTex(
+            r"\mathsf{K}\mathopen{\text{\sffamily (}}\mathsf{G}"
+            r"\mathclose{\text{\sffamily )}}",
+            color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
+        ).scale(2).move_to((
+            center_x,-2.65,0,
+        ))
+        self.play(FadeIn(vertices),FadeIn(clique_label))
+        self.wait(.75)
+        self.play(AnimationGroup(*(Create(edge) for edge in edges),lag_ratio=0),
+                  run_time=1)
         self.wait(2)
 
 
@@ -247,12 +330,90 @@ class Graficas(_Storyboard):
         self.play(FadeOut(duplicate_edge),FadeOut(edge_cross))
 
 
-class GraficaDeClanes(_Storyboard): key='grafica_clanes'
-class Ejemplo(_Storyboard): key='ejemplo'
-class Iteradas(_Storyboard): key='iteradas'
+class Iteradas(_Storyboard):
+    key='iteradas'
+
+    def construct(self):
+        models=graphs()[self.key][-1]
+        labels=(
+            r"\mathsf{G}",
+            r"\mathsf{K}\mathopen{\text{\sffamily (}}\mathsf{G}"
+            r"\mathclose{\text{\sffamily )}}",
+            r"\mathsf{K}^{2}\mathopen{\text{\sffamily (}}\mathsf{G}"
+            r"\mathclose{\text{\sffamily )}}",
+        )
+        groups=[]
+        for model,label in zip(models,labels):
+            xs=[x for x,_ in model['pos'].values()]
+            graph_label=MathTex(
+                label,color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
+            ).scale(1.7).move_to(((min(xs)+max(xs))/2,-2.65,0))
+            groups.append(VGroup(visual_graph(model),graph_label))
+
+        self.add(groups[0])
+        self.wait(.65)
+        self.play(FadeIn(groups[1]),run_time=1.05)
+        self.wait(.65)
+        self.play(FadeIn(groups[2]),run_time=1.05)
+        self.wait(1.15)
+
+
+class _CliqueSteps(_Storyboard):
+    cliques=()
+    highlight_fade_time=.1
+    highlight_hold_time=.3
+    between_cliques_time=0
+
+    def construct(self):
+        stages=graphs()[self.key]
+        model=stages[0][0]
+        self.add(visual_graph(model))
+        self.wait(.5)
+        for vertices,color,face in self.cliques:
+            highlight=complete_highlight(model,vertices,color,face)
+            self.play(FadeIn(highlight),run_time=self.highlight_fade_time)
+            self.wait(self.highlight_hold_time)
+            self.play(FadeOut(highlight),run_time=self.highlight_fade_time)
+            if self.between_cliques_time:
+                self.wait(self.between_cliques_time)
+        self.play(FadeIn(visual_graph(stages[-1][1])))
+        self.wait(2)
+
+
+class PrismaClanes(_CliqueSteps):
+    key='prisma_clanes'
+    cliques=PRISM_CLIQUES
+
+
+class PrismaK23(_CliqueSteps):
+    key='prisma_k23'
+    cliques=K23_CLIQUES
+
+
 class Prisma(_Storyboard): key='prisma'
-class SuspensionC5(_Storyboard): key='suspension_c5'
-class Comportamiento(_Storyboard): key='comportamiento'
+
+
+class SuspensionC5(_CliqueSteps):
+    key='suspension_c5'
+    cliques=SUSP_CLIQUES
+
+
+class Comportamiento(_Storyboard):
+    key='comportamiento'
+
+    def make_snapshot(self, snapshot):
+        result=visual_snapshot(snapshot)
+        for label,models in (('Nula',snapshot[:2]),('Divergente',snapshot[2:])):
+            if not models:
+                continue
+            centers=[]
+            for model in models:
+                xs=[x for x,_ in model['pos'].values()]
+                centers.append((min(xs)+max(xs))/2)
+            result.add(Tex(
+                r'\sffamily '+label,color='#263445',tex_template=LATIN_MODERN_TEMPLATE,
+            ).scale(1.5).move_to((sum(centers)/len(centers),-2.55,0)))
+        return result
 class IteradasOctaedro(_Storyboard): key='iteradas_octaedro'
 class Helly(_Storyboard): key='helly'
 class Piramide(_Storyboard): key='piramide'

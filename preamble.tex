@@ -6,6 +6,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\makeatletter
+\@ifclassloaded{beamer}{%
 \usetheme{Boadilla}
 \definecolor{AzulTitulo}{HTML}{14253B}
 \definecolor{VerdeEstructura}{HTML}{127C84}
@@ -14,6 +16,8 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[frame number]
 \setbeamersize{text margin left=7mm,text margin right=7mm}
+}{}
+\makeatother
 \newcommand{\AnimWide}[1]{%
   \href{run:videos/#1.mp4?autostart}{%
     \includegraphics[width=.97\linewidth,height=.60\textheight,keepaspectratio]{posters/#1.png}}}

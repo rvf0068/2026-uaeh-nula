@@ -503,3 +503,9 @@ class TopologiaGraficas(_Storyboard):
 class Piramide(_Storyboard): key='piramide'
 class Desmantelables(_Storyboard): key='desmantelables'
 class Dominados(_Storyboard): key='dominados'
+
+# The new Manim scenes are defined separately to leave the finished first part intact.
+from segunda_parte_manim import (
+    BettiOctaedros, DiscoSuspension, RetractoOctaedro,
+    DosEjemplosS2, ColapsosS2, IteradasNulas,
+)

@@ -469,15 +469,18 @@ Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos
 ** Pero ambas gráficas son nulas
 
 #+begin_center
-Los órdenes de las primeras iteradas son:
+Los órdenes de sus primeras iteradas son:
 
 #+LATEX: \AnimWide{iteradas_nulas}
 #+end_center
 
-#+ATTR_BEAMER: :overlay <2->
-- \(K^3(G_1)\) se desmantela mediante *62* eliminaciones de vértices dominados.
-- \(K^3(G_2)\) se desmantela mediante *64* eliminaciones.
-- Por el teorema de Prisner, *ambas gráficas son nulas*.
+** Certificados de nulidad
+
+#+ATTR_BEAMER: :overlay <+->
+- \(K^3(G_1)\) tiene 63 vértices y se desmantela mediante *62* eliminaciones de vértices dominados.
+- \(K^3(G_2)\) tiene 65 vértices y se desmantela mediante *64* eliminaciones.
+- Por el teorema de Prisner, ambas gráficas son *nulas*.
+- Sin embargo, \(|G_1|\simeq |G_2|\simeq S^2\): ninguna es contraíble.
 
 ** Las dos implicaciones son falsas
 

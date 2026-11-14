@@ -21,7 +21,7 @@ Rafael Villarroel Flores, UAEH
 
 \bigskip\bigskip
 
-22 de octubre de 2026
+17 de noviembre de 2026
 
 #+LATEX: \AnimTitle{intro}
 #+end_center
@@ -223,6 +223,30 @@ Por tanto \(O_n\) es divergente si \(n\ge3\). (Neumann-Lara, 1973.)
 #+begin_center
 #+LATEX: \alt<2->{\AnimWide{topologia_graficas}}{\phantom{\AnimWidePoster{topologia_graficas}}}
 #+end_center
+
+
+** Antecedentes: homotopía y el operador de clanes
+
+*** Prisner (1992)
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:END:
+
+#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/prisner_1992.pdf}
+#+LATEX: \par\vspace{.15em}\raggedright\SmallText
+
+Prisner planteó en 1992 la pregunta: ¿cuándo es \(G\simeq K(G)\)? Dio una condición suficiente: cuando \(G\) es Helly.
+
+*** Larrión, Pizaña y Neumann-Lara (2001)
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:BEAMER_ACT: <2->
+:END:
+
+#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/larrion_2001.pdf}
+#+LATEX: \par\vspace{.15em}\raggedright\SmallText
+
+Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 
 * Topología y gráficas de clanes
 

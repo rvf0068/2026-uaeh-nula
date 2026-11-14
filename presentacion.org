@@ -321,6 +321,184 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 :END:
 #+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
 
+* Nulidad y homotopía: una pregunta abierta por décadas
+
+** ¿Qué relación hay entre topología y comportamiento?
+
+#+ATTR_BEAMER: :overlay <+->
+- Una gráfica es *contraíble* si la realización de su complejo de completas es contraíble.
+- Una gráfica es *nula* si alguna iterada de clanes es la gráfica de un solo vértice.
+- Sabemos que toda gráfica *desmantelable es nula y contraíble*.
+- Pero, ¿se implican entre sí la contractibilidad y la nulidad sin hipótesis adicionales?
+
+#+LATEX: \vfill
+#+LATEX: \centering\Large\color{AzulTitulo}\(\text{Nula}\;\stackrel{?}{\Longleftrightarrow}\;\text{Contraíble}\)
+
+** Prisner y los números de Betti (1992)
+
+#+ATTR_BEAMER: :overlay <+->
+- Escribamos \(\beta_i(G)=\dim_{\mathbb F_2}H_i(|G|;\mathbb F_2)\).
+- *Teorema 2.3 de Prisner:* para toda gráfica \(G\),
+  \[
+  \beta_1(G)=\beta_1(K(G)),\qquad \beta_2(G)\geq\beta_2(K(G)).
+  \]
+- El número de componentes \(\beta_0\) también se conserva.
+- *Corolario 4.1:* si \(G\) es nula, entonces \(\beta_1(G)=0\).
+- Esto no obliga a que \(\beta_2(G)=0\).
+
+#+LATEX: \vfill
+#+LATEX: {\scriptsize E. Prisner, /Convergence of iterated clique graphs/, Discrete Math. 103 (1992), 199--207.}
+
+** Esferas que divergen
+
+#+begin_center
+Para el octaedro \(O_n=\overline{nK_2}\),
+\[
+|O_n|\cong S^{n-1},\qquad K(O_n)\cong O_{2^{n-1}}.
+\]
+
+#+LATEX: \AnimWide{betti_octaedros}
+#+end_center
+
+#+ATTR_BEAMER: :overlay <2->
+Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
+
+** Una intuición razonable, pero incompleta
+
+#+ATTR_BEAMER: :overlay <+->
+- Las iteradas del octaedro producen homología en dimensiones cada vez mayores.
+- La presencia de homología de dimensión alta parecía un indicio de comportamiento divergente.
+- *Pero la divergencia no exige una topología complicada:* hay gráficas divergentes homotópicas a \(S^1\) en todas sus iteradas.
+- Las familias de *clockwork graphs* y de gráficas localmente \(C_6\) lo muestran (Larrión, Pizaña y Villarroel-Flores, 2008).
+
+#+LATEX: \vfill
+#+LATEX: {\scriptsize /Equivariant collapses and the homotopy type of iterated clique graphs/, Discrete Math. 308 (2008), 3199--3207.}
+
+** Un contraejemplo en la otra dirección (2008)
+
+*** Construcción
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:END:
+
+#+LATEX: \SmallText
+- Se construye una triangulación \(H\) de un disco: \(|H|\) es contraíble.
+- Se forma la *suspensión* \(G=\operatorname{Susp}(H)\) agregando dos vértices no adyacentes, unidos a todo \(H\).
+- Entonces \(|G|\) es una suspensión de un disco: *es contraíble*.
+
+#+LATEX: {\scriptsize Larrión, Pizaña y Villarroel-Flores, /Contractibility and the clique graph operator/ (2008), Fig.~2.}
+
+*** Animación
+:PROPERTIES:
+:BEAMER_COL: 0.50
+:END:
+#+LATEX: \centering\AnimSide{disco_suspension}
+
+** ¿Por qué es divergente la suspensión?
+
+*** Teorema 3.1 y ejemplo
+:PROPERTIES:
+:BEAMER_COL: 0.49
+:END:
+#+LATEX: \SmallText
+En \(K(H)\) hay un ciclo inducido \(C_4\) cuyos vértices opuestos no tienen vecinos comunes fuera de él.
+
+Esto permite construir una *retracción*
+\[
+K(\operatorname{Susp}H)\longrightarrow O_4.
+\]
+Como \(O_4\) es divergente, también lo es \(G=\operatorname{Susp}H\).
+
+*Teorema 3.2 (2008):* existe una gráfica *contraíble y divergente*.
+
+*** Testigo octaédrico
+:PROPERTIES:
+:BEAMER_COL: 0.49
+:END:
+#+LATEX: \centering\AnimSide{retracto_octaedro}
+
+** La pregunta que permanecía abierta
+
+#+ATTR_BEAMER: :overlay <+->
+- Prisner (1992, p. 205) señaló que no conocía una gráfica *nula* cuyo complejo no fuera homológicamente trivial.
+- En 2008, al construir ejemplos *contraíbles divergentes*, todavía no se sabía si toda gráfica nula debía ser contraíble.
+- Esa pregunta volvió a formularse explícitamente en /Equivariant collapses/ (2008, Pregunta 2).
+- La cuestión era distinta de la ya resuelta: *contraíble* no implica *nula*.
+
+#+LATEX: \vfill
+#+LATEX: \centering\Large\color{AzulTitulo}¿Nula \(\Longrightarrow\) contraíble?
+
+** Dos gráficas nulas que no son contraíbles
+
+#+begin_center
+Dos ejemplos con *10 vértices y 30 aristas* cada uno.
+
+#+LATEX: \AnimWide{dos_ejemplos_s2}
+
+#+LATEX: \SmallText
+Cadenas graph6: =ICvbvy}|g= y =IEivrzm}o=.
+#+end_center
+
+** Sorprendentemente, ambas tienen tipo \(S^2\)
+
+#+begin_center
+En cada complejo de completas se pueden ejecutar *20 colapsos simpliciales elementales*.
+
+#+LATEX: \AnimWide{colapsos_s2}
+
+El resultado es una triangulación de la esfera \(S^2\).
+#+end_center
+
+** Certificado de la homotopía
+
+Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos:
+
+| Gráfica | Vértices | Aristas | Triángulos | Colapsos |
+|---------+----------+---------+------------+----------|
+| \(G_1\) |        8 |      18 |         12 |       20 |
+| \(G_2\) |        8 |      18 |         12 |       20 |
+
+#+ATTR_BEAMER: :overlay <+->
+- Cada arista residual pertenece a dos triángulos; el enlace de cada vértice es un ciclo.
+- El complejo es una superficie cerrada conexa y
+  \[
+  \chi=8-18+12=2.
+  \]
+- Por clasificación de superficies, es una esfera; los colapsos dan \(|G_1|\simeq|G_2|\simeq S^2\).
+
+** Pero ambas gráficas son nulas
+
+#+begin_center
+Los órdenes de las primeras iteradas son:
+
+#+LATEX: \AnimWide{iteradas_nulas}
+#+end_center
+
+#+ATTR_BEAMER: :overlay <2->
+- \(K^3(G_1)\) se desmantela mediante *62* eliminaciones de vértices dominados.
+- \(K^3(G_2)\) se desmantela mediante *64* eliminaciones.
+- Por el teorema de Prisner, *ambas gráficas son nulas*.
+
+** Las dos implicaciones son falsas
+
+#+ATTR_BEAMER: :overlay <+->
+- \(\text{Contraíble}\;\not\Rightarrow\;\text{Nula}\): el ejemplo \(G=\operatorname{Susp}H\) de 2008 es contraíble y divergente.
+- \(\text{Nula}\;\not\Rightarrow\;\text{Contraíble}\): \(G_1\) y \(G_2\) son nulas y tienen tipo \(S^2\).
+- No hay contradicción con Prisner: en la esfera \(\beta_1=0\), pero \(\beta_2=1\).
+- La homología y las iteradas de clanes proporcionan información diferente y complementaria.
+
+** Fuentes y verificación independiente
+
+#+LATEX: \SmallText
+- E. Prisner, /Convergence of iterated clique graphs/, *Discrete Mathematics* 103 (1992), 199--207 (Teorema 2.3, Corolario 4.1, p. 205).
+- F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Contractibility and the clique graph operator/, *Discrete Mathematics* 308 (2008), 3461--3469 (Teoremas 3.1 y 3.2, Figura 2).
+- F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Equivariant collapses and the homotopy type of iterated clique graphs/, *Discrete Mathematics* 308 (2008), 3199--3207.
+- Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
+
+#+begin_center
+#+LATEX: \texttt{python scripts/verify\_s2\_null.py}
+#+end_center
+
 # Local Variables:
 # ispell-dictionary: "castellano"
 # End:

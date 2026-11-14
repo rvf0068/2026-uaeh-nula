@@ -417,6 +417,17 @@ Como \(O_4\) es divergente, también lo es \(G=\operatorname{Susp}H\).
 :END:
 #+LATEX: \centering\AnimSide{retracto_octaedro}
 
+** Otro teorema del mismo artículo (2008)
+
+#+ATTR_BEAMER: :overlay <+->
+- *Teorema 6.2:* si \(K(G)\) es un cono (tiene un vértice universal), entonces \(G\) es contraíble.
+- En particular, el operador de clanes también permite reconocer ciertas gráficas contraíbles.
+- No es una equivalencia: la suspensión anterior es contraíble, pero \(K(G)\) contiene por retracción un octaedro \(O_4\).
+- El artículo dejaba aún abierta la dirección *nula \(\Longrightarrow\) contraíble*.
+
+#+LATEX: \vfill
+#+LATEX: {\scriptsize F. Larrión, M. A. Pizaña y R. Villarroel-Flores (2008), Teoremas 3.2 y 6.2.}
+
 ** La pregunta que permanecía abierta
 
 #+ATTR_BEAMER: :overlay <+->

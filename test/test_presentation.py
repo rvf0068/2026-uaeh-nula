@@ -31,6 +31,37 @@ class PresentationScenesTest(unittest.TestCase):
         self.assertEqual(set(graphs()), set(slides))
         self.assertTrue(set(SCENE_NAMES) <= classes)
 
+
+    def test_requested_scene_skips_unrelated_second_part_calculations(self):
+        """Scenes in part I and light part-II scenes should not trigger layouts."""
+        from unittest.mock import patch
+        from source import segunda_parte_data
+
+        with patch.object(segunda_parte_data, 'graph_example',
+                          side_effect=AssertionError('unrelated graph layout')), \
+             patch.object(segunda_parte_data, 'core_example',
+                          side_effect=AssertionError('unrelated collapse')), \
+             patch.object(segunda_parte_data, 'disc_example',
+                          side_effect=AssertionError('unrelated disk layout')):
+            for key in ('graficas', 'topologia_graficas',
+                        'betti_octaedros', 'retracto_octaedro'):
+                with self.subTest(scene=key):
+                    frames = graphs(key)
+                    self.assertIn(key, frames)
+                    self.assertNotIn('dos_ejemplos_s2', frames)
+                    self.assertNotIn('colapsos_s2', frames)
+                    self.assertNotIn('disco_suspension', frames)
+
+    def test_requested_s2_scene_does_not_generate_collapse_core(self):
+        from unittest.mock import patch
+        from source import segunda_parte_data
+
+        with patch.object(segunda_parte_data, 'core_example',
+                          side_effect=AssertionError('unrelated collapse')):
+            frames = graphs('dos_ejemplos_s2')
+            self.assertEqual(len(frames['dos_ejemplos_s2']), 2)
+            self.assertNotIn('colapsos_s2', frames)
+
     def test_iterated_house_clique_graph_is_vertical_in_all_stages(self):
         stages = graphs()['iteradas']
         self.assertEqual([len(stage) for stage in stages], [1, 2, 3])

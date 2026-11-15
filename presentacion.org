@@ -109,6 +109,7 @@ K^{0}(G)=G,\qquad K^{n}(G)=K\bigl(K^{n-1}(G)\bigr),\quad n\ge 1.
 #+end_center
 
 ** Los clanes del prisma
+
 #+begin_center
 El prisma triangular \(T_3\) tiene cinco clanes: dos triángulos y tres aristas.
 
@@ -116,6 +117,7 @@ El prisma triangular \(T_3\) tiene cinco clanes: dos triángulos y tres aristas.
 #+end_center
 
 ** Los clanes de \(K_{2,3}\)
+
 #+begin_center
 Los seis clanes de \(K_{2,3}\) son sus aristas.
 
@@ -123,6 +125,7 @@ Los seis clanes de \(K_{2,3}\) son sus aristas.
 #+end_center
 
 ** Iteradas del prisma
+
 #+begin_center
 El prisma triangular es periódico bajo el operador de clanes:
 
@@ -321,33 +324,32 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 :END:
 #+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
 
-* Nulidad y homotopía: una pregunta abierta por décadas
+* Nulidad y contractibilidad
 
 ** ¿Qué relación hay entre topología y comportamiento?
 
 #+ATTR_BEAMER: :overlay <+->
 - Una gráfica es *contraíble* si la realización de su complejo de completas es contraíble.
 - Una gráfica es *nula* si alguna iterada de clanes es la gráfica de un solo vértice.
-- Sabemos que toda gráfica *desmantelable es nula y contraíble*.
+- Una gráfica es *desmantelable* si se puede reducir a la gráfica de un solo vértice removiendo vértices dominados.
+- (Esto último es equivalente a ser *cop-win*).
+- Sabemos que *toda gráfica desmantelable es nula y contraíble*.
 - Pero, ¿se implican entre sí la contractibilidad y la nulidad sin hipótesis adicionales?
-
-#+LATEX: \vfill
-#+LATEX: \centering\Large\color{AzulTitulo}\(\text{Nula}\;\stackrel{?}{\Longleftrightarrow}\;\text{Contraíble}\)
+- \Large\color{AzulTitulo}\(\text{Nula}\;\stackrel{?}{\Longleftrightarrow}\;\text{Contraíble}\)
 
 ** Prisner y los números de Betti (1992)
 
 #+ATTR_BEAMER: :overlay <+->
 - Escribamos \(\beta_i(G)=\dim_{\mathbb F_2}H_i(|G|;\mathbb F_2)\).
-- *Teorema 2.3 de Prisner:* para toda gráfica \(G\),
+- *Teorema 2.3 de Prisner:* Para toda gráfica \(G\),
   \[
   \beta_1(G)=\beta_1(K(G)),\qquad \beta_2(G)\geq\beta_2(K(G)).
   \]
 - El número de componentes \(\beta_0\) también se conserva.
-- *Corolario 4.1:* si \(G\) es nula, entonces \(\beta_1(G)=0\).
+- *Corolario 4.1:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
 - Esto no obliga a que \(\beta_2(G)=0\).
-
-#+LATEX: \vfill
-#+LATEX: {\scriptsize E. Prisner, /Convergence of iterated clique graphs/, Discrete Math. 103 (1992), 199--207.}
+- (Larrión, Pizaña, VF, 2009) Para toda gráfica \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
+- *Corolario:* Si \(G\) es nula, entonces \(\pi_{1}(|G|)\) es trivial.
 
 ** Esferas que divergen
 

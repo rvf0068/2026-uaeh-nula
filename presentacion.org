@@ -134,6 +134,14 @@ El prisma triangular es periódico bajo el operador de clanes:
 \(T_3 \longrightarrow K_{2,3} \longrightarrow T_3\).
 #+end_center
 
+** Iteradas del octaedro
+
+#+begin_center
+Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2^{n-1}}\) (Neumann-Lara, 1973.)
+
+#+LATEX: \alt<1->{\AnimWide{iteradas_octaedro}}{\phantom{\AnimWidePoster{iteradas_octaedro}}}
+#+end_center
+
 ** Comportamiento
 
 *** Definiciones
@@ -155,19 +163,6 @@ El prisma triangular es periódico bajo el operador de clanes:
 :END:
 #+LATEX: \centering\only<+->{\AnimSide{comportamiento}}
 
-** Iteradas del octaedro
-
-#+begin_center
-Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces:
-
-\[
-K(O_n)\cong O_{2^{n-1}}.
-\]
-
-Por tanto \(O_n\) es divergente si \(n\ge3\). (Neumann-Lara, 1973.)
-
-#+LATEX: \alt<2->{\AnimWide{iteradas_octaedro}}{\phantom{\AnimWidePoster{iteradas_octaedro}}}
-#+end_center
 
 * Complejos simpliciales
 
@@ -227,67 +222,6 @@ Por tanto \(O_n\) es divergente si \(n\ge3\). (Neumann-Lara, 1973.)
 #+LATEX: \alt<2->{\AnimWide{topologia_graficas}}{\phantom{\AnimWidePoster{topologia_graficas}}}
 #+end_center
 
-
-** Homotopía y el operador de clanes
-
-*** Prisner (1992)
-:PROPERTIES:
-:BEAMER_COL: 0.48
-:END:
-
-#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/prisner_1992.pdf}
-#+LATEX: \par\vspace{.15em}\raggedright\SmallText
-
-Prisner planteó en 1992 la pregunta: ¿cuándo es \(G\simeq K(G)\)? Dio una condición suficiente: cuando \(G\) es Helly.
-
-*** Larrión, Pizaña y Neumann-Lara (2001)
-:PROPERTIES:
-:BEAMER_COL: 0.48
-:BEAMER_ACT: <2->
-:END:
-
-#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/larrion_2001.pdf}
-#+LATEX: \par\vspace{.15em}\raggedright\SmallText
-
-Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
-
-* Topología y gráficas de clanes
-
-** Gráficas Helly
-
-*** Resultados
-:PROPERTIES:
-:BEAMER_COL: 0.58
-:END:
-
-#+ATTR_BEAMER: :overlay <+->
-- Una colección \(\mathcal{C}\) de subconjuntos de \(X\) es *intersecante* si dos cualesquiera de sus miembros tienen intersección no vacía.
-- Es *Helly* si toda subfamilia intersecante tiene intersección total no vacía.
-- Una gráfica \(G\) es *Helly* si su colección de clanes satisface la propiedad de Helly.
-- La *pirámide* es la gráfica no Helly más pequeña.
-
-*** Animación
-:PROPERTIES:
-:BEAMER_COL: 0.40
-:END:
-#+LATEX: \centering\alt<+->{\AnimSide{piramide}}{\phantom{\AnimSidePoster{piramide}}}
-
-** 
-
-#+ATTR_BEAMER: :overlay <+->
-- Las gráficas sin triángulos son Helly. También lo son las gráficas completas y el prisma triangular.
-- Existe un algoritmo polinomial que decide si una gráfica es Helly (Dragan, 1989; Szwarcfiter, 1997).
-
-
-** Teoremas de Escalante
-
-#+ATTR_BEAMER: :overlay <+->
-- (Escalante, 1973) Si \(G\) es Helly, entonces \(G\) es convergente.
-- (Escalante, 1973) Si \(G\) es Helly, \(K(G)\) es Helly.
-- Corolario: Si \(G\) es Helly, entonces \(K^{n}(G)\simeq G\) para todo \(n\).
-- Existen gráficas no Helly cuyo gráfica de clanes sí es Helly, como la pirámide.
-- De aquí se obtiene que toda gráfica \(G\) tal que \(|G|\leq 5\) es convergente.
-
 ** Gráficas desmantelables
 
 *** Definiciones
@@ -306,7 +240,7 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 :END:
 #+LATEX: \centering\alt<+->{\AnimSide{desmantelables}}{\phantom{\AnimSidePoster{desmantelables}}}
 
-** Teoremas sobre vértices dominados
+** Tres clases de gráficas
 
 *** Resultados
 :PROPERTIES:
@@ -314,7 +248,23 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 :END:
 
 #+ATTR_BEAMER: :overlay <+->
+- (Prisner, 1992) Si \(x\in G\) es dominado, entonces \(G\simeq G-x\).
+- Por lo tanto, si \(G\) es desmantelable, entonces \(G\) es contraíble. 
 - (Prisner, 1992) Si \(G\) es desmantelable entonces \(G\) es nula.
+
+*** Animación
+:PROPERTIES:
+:BEAMER_COL: 0.37
+:END:  
+#+LATEX: \centering\alt<+->{\AnimSide{conjuntos_dominacion}}{\phantom{\AnimSidePoster{conjuntos_dominacion}}}
+
+** Dominación y clan comportamiento
+
+*** Resultados
+:PROPERTIES:
+:BEAMER_COL: 0.61
+:END:
+
 - (Frías-Armenta, Neumann-Lara, Pizaña, 2004) Si \(x\) es dominado en \(G\), entonces \(G\) y \(G-x\) tienen el mismo comportamiento.
 - Por ejemplo, el octaedro \(O_3\) con dos hojas adjuntas sigue siendo divergente.
 
@@ -323,6 +273,70 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 :BEAMER_COL: 0.37
 :END:
 #+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
+
+
+
+** Homotopía y el operador de clanes
+
+*** Prisner (1992)
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:END:
+
+#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/prisner_1992.pdf}
+#+LATEX: \par\vspace{.15em}\raggedright\SmallText
+
+Prisner planteó en 1992 la pregunta: ¿cuándo es \(G\simeq K(G)\)? Dio una condición suficiente: cuando \(G\) es clan-Helly.
+
+*** Larrión, Pizaña y Neumann-Lara (2001)
+:PROPERTIES:
+:BEAMER_COL: 0.48
+:BEAMER_ACT: <2->
+:END:
+
+#+LATEX: \centering\includegraphics[page=1,width=.99\linewidth,height=.71\textheight,keepaspectratio]{papers/larrion_2001.pdf}
+#+LATEX: \par\vspace{.15em}\raggedright\SmallText
+
+Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
+
+* Topología y gráficas de clanes
+
+** La propiedad de Helly
+
+*** Resultados
+:PROPERTIES:
+:BEAMER_COL: 0.58
+:END:
+
+#+ATTR_BEAMER: :overlay <+->
+- Una colección \(\mathcal{C}\) de subconjuntos de \(X\) es *intersecante* si dos cualesquiera de sus miembros tienen intersección no vacía.
+- La colección \(\mathcal{C}\) tiene la propiedad de Helly si toda subfamilia intersecante tiene intersección total no vacía.
+- La gráfica \(G\) es *disco-Helly* si la colección de discos \(\{D_{r}(x)\mid x\in G, r>0\}\) tiene la propiedad de Helly.
+- Una gráfica \(G\) es *clan-Helly* si su colección de clanes satisface la propiedad de Helly.
+- La *pirámide* es la gráfica no clan-Helly más pequeña.
+
+*** Animación
+:PROPERTIES:
+:BEAMER_COL: 0.40
+:END:
+#+LATEX: \centering\alt<+->{\AnimSide{piramide}}{\phantom{\AnimSidePoster{piramide}}}
+
+** 
+
+#+ATTR_BEAMER: :overlay <+->
+- Las gráficas sin triángulos son clan-Helly. También lo son las gráficas completas y el prisma triangular.
+- Existe un algoritmo polinomial que decide si una gráfica es clan-Helly (Dragan, 1989; Szwarcfiter, 1997).
+
+** Teoremas de Escalante
+
+#+ATTR_BEAMER: :overlay <+->
+- (Escalante, 1973) Si \(G\) es clan-Helly, entonces \(G\) es convergente.
+- (Escalante, 1973) Si \(G\) es clan-Helly, \(K(G)\) es clan-Helly.
+- Corolario: Si \(G\) es clan-Helly, entonces \(K^{n}(G)\simeq G\) para todo \(n\).
+- Existen gráficas no clan-Helly cuyo gráfica de clanes sí es clan-Helly, como la pirámide.
+- De aquí se obtiene que toda gráfica \(G\) tal que \(|G|\leq 5\) es convergente.
+
+
 
 * Nulidad y contractibilidad
 
@@ -347,7 +361,10 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
   \]
 - El número de componentes \(\beta_0\) también se conserva.
 - *Corolario 4.1:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
-- Esto no obliga a que \(\beta_2(G)=0\).
+
+** Ejemplos
+(poner aquí el ejemplo de Prisner y luego nuestro ejemplo de gráfica contraíble y nula sin vértices dominados)
+
 - (Larrión, Pizaña, VF, 2009) Para toda gráfica \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
 - *Corolario:* Si \(G\) es nula, entonces \(\pi_{1}(|G|)\) es trivial.
 

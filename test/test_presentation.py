@@ -5,7 +5,7 @@ from collections import Counter
 from itertools import combinations
 from pathlib import Path
 
-from source.storyboards import CYAN, SCENE_NAMES, SUSP_CLIQUES, graphs, move, octa, susp
+from source.storyboards import CORAL, CYAN, MINT, SCENE_NAMES, SUSP_CLIQUES, graphs, move, octa, susp
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +100,47 @@ class PresentationScenesTest(unittest.TestCase):
         self.assertEqual([len(stage) for stage in stages], [1, 1, 1])
         self.assertEqual(set(stages[0][0]['pos']) - set(octa(3)['pos']), {'u', 'v'})
         self.assertEqual(stages[-1][0], octa(3))
+
+    def test_domination_set_diagram_sequence_and_containment(self):
+        stages = [stage[0]['sets'] for stage in graphs('conjuntos_dominacion')['conjuntos_dominacion']]
+        self.assertEqual([[item['label'] for item in stage] for stage in stages],
+                         [['Desmantelables'], ['Desmantelables', 'Contraíbles'],
+                          ['Desmantelables', 'Contraíbles', 'Nulas']])
+        self.assertEqual(stages[0], stages[1][:1])
+        self.assertEqual(stages[1], stages[2][:2])
+        inner, left, right = stages[-1]
+        for outer in (left, right):
+            self.assertLess(math.dist(inner['center'], outer['center']) + inner['radius'],
+                            outer['radius'])
+        distance = math.dist(left['center'], right['center'])
+        self.assertLess(abs(left['radius'] - right['radius']), distance)
+        self.assertLess(distance, left['radius'] + right['radius'])
+
+    def test_dismantling_highlights_and_removes_one_dominated_vertex(self):
+        stages = [stage[0] for stage in graphs('desmantelables')['desmantelables']]
+        initial = stages[0]
+        self.assertEqual(len(initial['pos']), 8)
+        self.assertEqual(len(stages), 15)
+        for before, highlighted, after in zip(stages[::2], stages[1::2], stages[2::2]):
+            self.assertEqual(highlighted['pos'], before['pos'])
+            self.assertEqual(highlighted['edges'], before['edges'])
+            colors = highlighted['node_colors']
+            self.assertEqual(Counter(colors.values()), Counter({CORAL: 1, MINT: 1}))
+            dominated = next(vertex for vertex, color in colors.items() if color == CORAL)
+            dominator = next(vertex for vertex, color in colors.items() if color == MINT)
+            neighborhoods = {vertex: {vertex} for vertex in before['pos']}
+            for a, b in before['edges']:
+                neighborhoods[a].add(b)
+                neighborhoods[b].add(a)
+            self.assertIn(dominator, neighborhoods[dominated] - {dominated})
+            self.assertLessEqual(neighborhoods[dominated], neighborhoods[dominator])
+            self.assertEqual(set(before['pos']) - set(after['pos']), {dominated})
+            self.assertEqual(after['edges'], [edge for edge in before['edges'] if dominated not in edge])
+            self.assertFalse(after['node_colors'])
+        self.assertEqual(len(stages[-1]['pos']), 1)
+        xs, ys = zip(*initial['pos'].values())
+        self.assertGreater(max(xs) - min(xs), 11)
+        self.assertLess(max(abs(y) for y in ys) + .25 * initial['node_size'], 4)
 
     def test_octahedron_iterates_stay_large_and_separate(self):
         stages = graphs()['iteradas_octaedro']

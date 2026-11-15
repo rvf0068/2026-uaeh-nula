@@ -8,4 +8,8 @@ emacs --batch -Q \
   --eval "(require 'ox-beamer)" \
   --visit presentacion.org \
   --eval "(org-beamer-export-to-latex)"
+if [[ -f presentacion.aux ]]; then
+  rm -- presentacion.aux
+  echo 'Removed stale presentacion.aux; it will be regenerated when compiling.'
+fi
 echo 'Exported presentacion.tex from presentacion.org; compile with scripts/build_pdf.sh.'

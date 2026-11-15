@@ -60,13 +60,15 @@ En `SuspensionC5` se resaltan por separado los diez clanes triangulares de la su
 
 En «Comportamiento», las definiciones se revelan una a una al avanzar y después aparece la animación; esta etiqueta como «Nula» la sucesión del triángulo y como «Divergente» la de los octaedros.
 
-En «Iteradas del octaedro», la animación aparece al avanzar después del texto y muestra sucesivamente \(G=O_3\), \(K(G)\) y \(K^2(G)\).
+En «Iteradas del octaedro», la animación aparece junto con el texto y muestra sucesivamente \(G=O_3\), \(K(G)\) y \(K^2(G)\).
 
 En «Realización de \(\Delta_1\)», la escena `RealizacionSimplicial` construye la realización geométrica mostrando sucesivamente los cuatro vértices etiquetados, sus cuatro aristas y el triángulo relleno.
 
 En «Topología en gráficas», `TopologiaGraficas` compara la realización contraíble anterior con la superficie triangulada de la suspensión de \(C_5\), homotópica a \(S^2\).
 
-En «Gráficas Helly», «Gráficas desmantelables» y «Teoremas sobre vértices dominados», la animación aparece al avanzar después del último punto del texto.
+En «La propiedad de Helly», «Gráficas desmantelables» y «Teoremas sobre vértices dominados», la animación aparece al avanzar después del último punto del texto. En «Gráficas desmantelables», cada vértice dominado aparece en rojo y su dominador en verde antes de eliminar el primero.
+
+En «Teoremas sobre vértices dominados», el diagrama muestra primero las gráficas desmantelables, después las contraíbles y finalmente las nulas. Las dos últimas regiones se cruzan sin que ninguna contenga a la otra.
 
 Ejemplo de Manim para una sola escena:
 
@@ -109,11 +111,13 @@ bash scripts/build_pdf.sh
 
 Si modificas el contenido en el `.tex` en lugar del `.org`, **no ejecutes `export_org.sh`** sin guardar una copia: la exportación sobreescribe `presentacion.tex`.
 
+Después de exportar, el script elimina `presentacion.aux` para evitar errores por datos auxiliares incompatibles de una compilación anterior; `pdflatex` lo regenera.
+
 Para las previsualizaciones matemáticas de Org (`C-c C-x C-l`), `preamble.tex` omite los ajustes de Beamer cuando Org usa la clase `article`. Si Org desactivó la precompilación tras un error anterior, reabre el archivo o ejecuta `(setq-local org-latex-preview-process-precompile t)` y vuelve a generar las previsualizaciones.
 
 ## Regenerar únicamente las previsualizaciones sin Manim (opcional)
 
-Si tienes Pillow y ffmpeg:
+Si tienes Pillow, la fuente DejaVu Sans y ffmpeg:
 
 ```bash
 uv pip install --python .venv/bin/python Pillow

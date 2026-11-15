@@ -13,11 +13,11 @@ scenes=(
   'Intro:intro' 'Graficas:graficas' 'Completas:completas' 'Clanes:clanes'
   'GraficaDeClanes:grafica_clanes' 'SuspensionC5:suspension_c5' 'Iteradas:iteradas'
   'PrismaClanes:prisma_clanes' 'PrismaK23:prisma_k23' 'Prisma:prisma'
-  'Comportamiento:comportamiento'
-  'IteradasOctaedro:iteradas_octaedro' 'RealizacionSimplicial:realizacion_simplicial'
+  'IteradasOctaedro:iteradas_octaedro' 'Comportamiento:comportamiento'
+  'RealizacionSimplicial:realizacion_simplicial'
   'TopologiaGraficas:topologia_graficas'
-  'Piramide:piramide'
-  'Desmantelables:desmantelables' 'Dominados:dominados'
+  'Desmantelables:desmantelables' 'ConjuntosDominacion:conjuntos_dominacion'
+  'Dominados:dominados' 'Piramide:piramide'
 )
 second_part_scenes=(
   'BettiOctaedros:betti_octaedros' 'DiscoSuspension:disco_suspension'

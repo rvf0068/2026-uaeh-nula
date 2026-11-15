@@ -6,11 +6,11 @@ The stage geometry is in storyboards.py and can be edited independently.
 from itertools import combinations
 
 from manim import (
-    Scene, Dot, Line, CubicBezier, Polygon, MathTex, Tex, TexTemplate, VGroup, FadeIn, FadeOut, AnimationGroup,
+    Scene, Dot, Line, Circle, CubicBezier, Polygon, MathTex, Tex, TexTemplate, VGroup, FadeIn, FadeOut, AnimationGroup,
     LaggedStart, Create, config
 )
 import numpy as np
-from storyboards import graphs, SCENE_NAMES, BG, CYAN, PRISM_CLIQUES, K23_CLIQUES, SUSP_CLIQUES
+from storyboards import graphs, SCENE_NAMES, BG, CYAN, CORAL, MINT, PRISM_CLIQUES, K23_CLIQUES, SUSP_CLIQUES
 
 config.background_color = BG
 INVALID_COLOR = '#c62828'
@@ -501,5 +501,55 @@ class TopologiaGraficas(_Storyboard):
 
 
 class Piramide(_Storyboard): key='piramide'
-class Desmantelables(_Storyboard): key='desmantelables'
+class Desmantelables(_Storyboard):
+    key='desmantelables'
+
+    def construct(self):
+        stages=graphs(self.key)[self.key]
+        model=stages[0][0]
+        visual=visual_graph(model)
+        dots=dict(zip(model['pos'],visual[2]))
+        edges={frozenset(ids):line for ids,line in zip(model['edges'],visual[1])}
+        self.add(visual)
+        self.wait(1)
+        for highlighted in stages[1::2]:
+            colors=highlighted[0]['node_colors']
+            dominated=next(vertex for vertex,color in colors.items() if color == CORAL)
+            dominator=next(vertex for vertex,color in colors.items() if color == MINT)
+            self.play(dots[dominated].animate.set_color(CORAL),
+                      dots[dominator].animate.set_color(MINT),run_time=.4)
+            self.wait(.9)
+            incident=[edge for edge in edges if dominated in edge]
+            self.play(FadeOut(dots[dominated]),
+                      *(FadeOut(edges[edge]) for edge in incident),
+                      dots[dominator].animate.set_color(CYAN),run_time=.5)
+            for edge in incident:
+                del edges[edge]
+            self.wait(.4)
+        self.wait(1)
+
+
+class ConjuntosDominacion(_Storyboard):
+    key='conjuntos_dominacion'
+
+    def construct(self):
+        sets=graphs(self.key)[self.key][-1][0]['sets']
+        groups=[]
+        for item in sets:
+            outline=Circle(radius=item['radius'],color=item['color'],stroke_width=6)
+            outline.move_to((*item['center'],0))
+            label=Tex(r'\sffamily '+item['label'],color=item['color'],
+                      tex_template=LATIN_MODERN_TEMPLATE)
+            label.scale_to_fit_height(.34)
+            if label.width > 2.4:
+                label.scale_to_fit_width(2.4)
+            label.move_to((*item['label_pos'],0))
+            groups.append(VGroup(outline,label))
+        self.add(groups[0])
+        self.wait(1.5)
+        for group in groups[1:]:
+            self.play(FadeIn(group),run_time=1)
+            self.wait(1.5)
+
+
 class Dominados(_Storyboard): key='dominados'

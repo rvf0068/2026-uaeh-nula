@@ -17,6 +17,15 @@ MINT = '#16805d'
 BG = '#ffffff'
 PALETTE = (CYAN, CORAL, GOLD, PURPLE, MINT)
 
+DOMINATION_SETS = (
+    dict(label='Desmantelables', center=(0, 0), radius=1.35,
+         label_pos=(0, 0), color=CYAN),
+    dict(label='Contraíbles', center=(-1.65, 0), radius=3.3,
+         label_pos=(-3.35, 0), color=MINT),
+    dict(label='Nulas', center=(1.65, 0), radius=3.3,
+         label_pos=(3.35, 0), color=CORAL),
+)
+
 
 def graph(pos, edges=(), faces=(), node_colors=None, edge_color=EDGE, edge_opacity=.8, node_size=1., scale=1., shift=(0,0)):
     """Return a drawable graph with optional complete-set highlighting polygons.
@@ -264,10 +273,21 @@ def graphs(only=None):
     frames['piramide']=[stage(pyramid()),stage(pyramid_face(1)),stage(pyramid_face(2)),stage(pyramid_face(3))]
     # 14. Removing dominated vertices from a tree.
     p,e=tree_nodes()
-    frames['desmantelables']=[stage(graph(p,e))]
-    for removed in [('0','5','6','7'),('0','5','6','7','1'),('0','5','6','7','1','2'),('0','5','6','7','1','2','3')]:
-        remain={k:v for k,v in p.items() if k not in removed}
-        frames['desmantelables'].append(stage(graph(remain,[(a,b) for a,b in e if a in remain and b in remain])))
+    p={k:(2.3*x+1.15,2.3*y) for k,(x,y) in p.items()}
+    remaining=dict(p)
+    edges=list(e)
+    frames['desmantelables']=[stage(graph(remaining,edges))]
+    for dominated,dominator in [('0','1'),('5','4'),('6','4'),('7','3'),
+                                 ('1','2'),('2','3'),('3','4')]:
+        frames['desmantelables'].append(stage(graph(
+            remaining,edges,node_colors={dominated:CORAL,dominator:MINT})))
+        del remaining[dominated]
+        edges=[(a,b) for a,b in edges if dominated not in (a,b)]
+        frames['desmantelables'].append(stage(graph(remaining,edges)))
+    frames['conjuntos_dominacion']=[
+        stage(dict(graph({}),sets=DOMINATION_SETS[:count]))
+        for count in range(1,len(DOMINATION_SETS)+1)
+    ]
     # 15. Attached leaves on O3 are dominated; remove them.
     octg=octa(3); pp=dict(octg['pos']); pp.update(u=(-3.6,-.2),v=(3.6,.2))
     ee=octg['edges']+[('u','0'),('v','3')]
@@ -340,7 +360,8 @@ SCENE_NAMES = {
     'IteradasOctaedro':'iteradas_octaedro','RealizacionSimplicial':'realizacion_simplicial',
     'TopologiaGraficas':'topologia_graficas',
     'Piramide':'piramide',
-    'Desmantelables':'desmantelables','Dominados':'dominados',
+    'Desmantelables':'desmantelables','ConjuntosDominacion':'conjuntos_dominacion',
+    'Dominados':'dominados',
     'BettiOctaedros':'betti_octaedros','DiscoSuspension':'disco_suspension',
     'RetractoOctaedro':'retracto_octaedro','DosEjemplosS2':'dos_ejemplos_s2',
     'ColapsosS2':'colapsos_s2','IteradasNulas':'iteradas_nulas'

@@ -7,7 +7,7 @@ actual Manim Community renders use `bash scripts/render_manim.sh` instead.
 from __future__ import annotations
 import os, sys, subprocess
 from pathlib import Path
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'source'))
@@ -39,6 +39,14 @@ def paint(snapshot):
             r=max(3,int(6*model['node_size']))
             c=rgb(model['node_colors'].get(name,CYAN))
             d.ellipse((cx-r,cy-r,cx+r,cy+r),fill=(*c,255))
+        for item in model.get('sets', ()):
+            x,y=item['center']
+            r=item['radius']
+            d.ellipse((xy(x-r,y+r),xy(x+r,y-r)),
+                      outline=(*rgb(item['color']),255),width=4)
+            d.text(xy(*item['label_pos']),item['label'],
+                   fill=(*rgb(item['color']),255),anchor='mm',
+                   font=ImageFont.truetype('DejaVuSans.ttf',size=18))
     return im.convert('RGB')
 
 def mix(a,b,t):

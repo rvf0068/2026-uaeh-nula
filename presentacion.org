@@ -40,7 +40,7 @@ Consideramos solamente gráficas finitas y simples (no dirigidas, sin lazos, sin
 
 #+latex: \bigskip
 
-La cantidad de vértices de la gráfica \(G\) se llama el *orden* de \(G\) y lo denotamos \(|G|\).
+La cantidad de vértices de la gráfica \(G\) se llama el *orden* de \(G\).
 
 *** Animación
 :PROPERTIES:
@@ -151,10 +151,10 @@ Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2
 :END:
 
 #+ATTR_BEAMER: :overlay <+->
-- Se dice que \(G\) es *convergente* si la sucesión de órdenes \(\{|K^n(G)|\}\) es acotada.
+- Se dice que \(G\) es *convergente* si la sucesión de órdenes de las iteradas de clanes es acotada.
 - Esto equivale a que \(G,K(G),K^2(G),\ldots\) tenga sólo una cantidad finita de términos distintos salvo isomorfismo.
 - También equivale a que \(K^m(G)\cong K^n(G)\) para algunos \(m<n\).
-- En el caso de que \(|K^{n}(G)|=1\) para alguna \(n\), se dice que \(G\) es *nula*.
+- En el caso de que \(K^{n}(G)\) sea una gráfica trivial (es decir, un vértice) para alguna \(n\), se dice que \(G\) es *nula*.
 - Si \(G\) no es convergente, se dice es *divergente*.
 - Decidir el comportamiento es un problema central del área.
 
@@ -259,7 +259,7 @@ Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2
 :END:  
 #+LATEX: \centering\alt<+->{\AnimSide{conjuntos_dominacion}}{\phantom{\AnimSidePoster{conjuntos_dominacion}}}
 
-** 
+** Preguntas
 
 #+ATTR_BEAMER: :overlay <+->
 - Es inmediato que \(G\) es nula si y solo si \(K(G)\) es nula.
@@ -388,7 +388,7 @@ Prisner (1992) mostró este ejemplo de una gráfica nula (y contraíble) que no 
 
 #+latex: \bigskip
 
-Ejemplo en (Larrión, Pizaña, VF, 2008) de lo mismo.
+Ejemplo en (Larrión, Pizaña, VF, 2008) de una gráfica nula que no es desmantelable.
 #+end_center
 
 ** COMMENT Dominación y clan comportamiento
@@ -459,7 +459,7 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 #+ATTR_BEAMER: :overlay <+->
 - Las gráficas sin triángulos son clan-Helly. También lo son las gráficas completas y el prisma triangular.
 - Existe un algoritmo polinomial que decide si una gráfica es clan-Helly (Dragan, 1989; Szwarcfiter, 1997).
-- (Bandelt, Prisner, 1991)  Son equivalentes:
+- (Bandelt, Prisner, 1991) Para \(G\) una gráfica conexa, son equivalentes:
   - \(G\) es disco-Helly,
   - \(G\) es clan-Helly y desmantelable,
   - \(G\) es clan-Helly y nula
@@ -529,7 +529,7 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 :BEAMER_COL: 0.48
 :END:
 
-- Se construye una triangulación \(H\) de un disco: \(|H|\) es contraíble.
+- Se construye una cierta triangulación \(H\) de un disco: \(|H|\) es contraíble.
 - Se forma la *suspensión* \(G=\operatorname{Susp}(H)\) agregando dos vértices no adyacentes, unidos a todo \(H\).
 - Entonces \(|G|\) es una suspensión de un disco: *es contraíble*.
 - (2008,Larrión, Pizaña, VF) \(G\) es contraíble, pero divergente. En particular, no es nula.
@@ -584,7 +584,7 @@ En cada complejo de completas se pueden ejecutar *20 colapsos simpliciales eleme
 Resultan triangulaciones de la esfera \(S^2\).
 #+end_center
 
-** COMMENT Certificado de la homotopía
+** Certificado de la homotopía
 
 Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos:
 
@@ -594,12 +594,12 @@ Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos
 | \(G_2\) |        8 |      18 |         12 |       20 |
 
 #+ATTR_BEAMER: :overlay <+->
-- Cada arista residual pertenece a dos triángulos; el enlace de cada vértice es un ciclo.
+- Cada arista pertenece a dos triángulos y la vecindad de cada vértice es un ciclo.
 - El complejo es una superficie cerrada conexa y
   \[
   \chi=8-18+12=2.
   \]
-- Por clasificación de superficies, es una esfera; los colapsos dan \(|G_1|\simeq|G_2|\simeq S^2\).
+- Por clasificación de superficies, resultan esferas, por tanto, \(|G_1|\simeq|G_2|\simeq S^2\).
 
 ** Ambas gráficas son nulas
 
@@ -623,8 +623,7 @@ Los órdenes de sus primeras iteradas son:
 - \(\text{Contraíble}\;\not\Rightarrow\;\text{Nula}\): el ejemplo \(G=\operatorname{Susp}H\) de 2008 es contraíble y divergente.
 - \(\text{Nula}\;\not\Rightarrow\;\text{Contraíble}\): \(G_1\) y \(G_2\) son nulas y tienen tipo \(S^2\).
 - No hay contradicción con Prisner: en la esfera \(\beta_1=0\), pero \(\beta_2=1\).
-
-** Verificación independiente
+- También se cumple que existe \(n\) tal que \(K^n(G_1)\) y \(K^n(G_2)\) son clan-Helly, y sin embargo, sus iteradas no son homotópicas.
 
 Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
 

@@ -465,7 +465,7 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
   - \(G\) es clan-Helly y nula
 - Por lo tanto, dentro de las clan Helly es equivalente ser desmantelable a ser nula.
 - (Chalopin, Chepoi, Hirai, Osajda, 2020) Si \(G\) es clan-Helly y simple-conexa, entonces \(G\) es disco-Helly.
-- Corolario: También es equivalente a las tres anteriores ser clan-Helly y contraíble.
+- *Corolario:* Entre las clan-Helly, es equivalente ser desmantelable, nula y contraíble.
 
 ** COMMENT Teoremas de Escalante
 
@@ -562,6 +562,18 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 
 F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Equivariant collapses and the homotopy type of iterated clique graphs/, *Discrete Mathematics* 308 (2008), 3199--3207.
 
+** Pregunta en el 2013
+
+[[file:morse.png]]
+
+F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Discrete Morse Theory and the Homotopy Type of Clique Graphs/, *Annals of Combinatorics* 17 (2013), 743--754.
+
+** Pregunta en el 2024
+
+[[file:islas.png]]
+
+M. Islas-Gómez  y R. Villarroel-Flores, /On the Homotopy Type of the Iterated Clique Graphs of Low Degree/, *Annals of Combinatorics* 28 (2024), 367--378.
+
 * Contraejemplos
 
 ** Dos gráficas nulas que no son contraíbles
@@ -617,19 +629,26 @@ Los órdenes de sus primeras iteradas son:
 - Por el teorema de Prisner, ambas gráficas son *nulas*.
 - Sin embargo, \(|G_1|\simeq |G_2|\simeq S^2\): ninguna es contraíble.
 
-** Las dos implicaciones son falsas
+** Implicaciones falsas
 
 #+ATTR_BEAMER: :overlay <+->
 - \(\text{Contraíble}\;\not\Rightarrow\;\text{Nula}\): el ejemplo \(G=\operatorname{Susp}H\) de 2008 es contraíble y divergente.
 - \(\text{Nula}\;\not\Rightarrow\;\text{Contraíble}\): \(G_1\) y \(G_2\) son nulas y tienen tipo \(S^2\).
-- No hay contradicción con Prisner: en la esfera \(\beta_1=0\), pero \(\beta_2=1\).
-- También se cumple que existe \(n\) tal que \(K^n(G_1)\) y \(K^n(G_2)\) son clan-Helly, y sin embargo, sus iteradas no son homotópicas.
+- Se cumple que existe \(n\) tal que \(K^n(G_1)\) y \(K^n(G_2)\) son clan-Helly, y sin embargo, ni \(G_{1}\) ni \(G_{2}\) son homotópicamente permanentes.
+- Se cumple que existe \(n\) tal que \(K^n(G_1)\) y \(K^n(G_2)\) son clan-Helly, y sin embargo, son homotópicas a \(S^{2}\)
+- Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
+  #+begin_center
+  #+LATEX: \texttt{python scripts/verify\_s2\_null.py}
+  #+end_center
 
-Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
+** 
 
 #+begin_center
-#+LATEX: \texttt{python scripts/verify\_s2\_null.py}
+FIN
+
+#+LATEX: \AnimWide{dos_ejemplos_s2}
 #+end_center
+
 
 # Local Variables:
 # ispell-dictionary: "castellano"

@@ -6,6 +6,7 @@
 #+LATEX_CLASS_OPTIONS: [aspectratio=169,10pt]
 #+OPTIONS: H:2 toc:nil num:nil title:nil author:nil date:nil tags:nil
 #+LATEX_HEADER: \input{preamble.tex}
+#+LATEX_HEADER: \usepackage{tikz}
 
 ** Gráficas iteradas de clanes: contractibilidad y nulidad
 :PROPERTIES:
@@ -258,7 +259,139 @@ Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2
 :END:  
 #+LATEX: \centering\alt<+->{\AnimSide{conjuntos_dominacion}}{\phantom{\AnimSidePoster{conjuntos_dominacion}}}
 
-** Dominación y clan comportamiento
+** 
+
+#+ATTR_BEAMER: :overlay <+->
+- Es inmediato que \(G\) es nula si y solo si \(K(G)\) es nula.
+- (Prisner, 1992) Si \(G\) es desmantelable, entonces \(K(G)\) es desmantelable.
+- ¿Será cierto que si \(K(G)\) es desmantelable, entonces \(G\) es desmantelable?
+- ¿Será cierto que si \(G\) es contraíble, entonces \(K(G)\) es contraíble?
+- ¿Qué relación hay entre las nulas y las contraíbles?
+
+** Ejemplos
+
+***                                                                   :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.48
+:BEAMER_OPT: T
+:END:
+
+#+begin_center
+#+begin_export latex
+\begin{minipage}[c][4.5cm][c]{\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.6,
+  x=0.85cm, y=0.57cm,
+  line width=0.65pt
+]
+  % Top and bottom
+  \coordinate (t) at ( 0, 6);
+  \coordinate (r) at ( 0,-6);
+
+  % Upper row
+  \coordinate (a) at (-3, 3);
+  \coordinate (b) at (-1, 3);
+  \coordinate (c) at ( 1, 3);
+  \coordinate (d) at ( 3, 3);
+
+  % Interior
+  \coordinate (e) at ( 0, 2);
+  \coordinate (f) at (-1, 1);
+  \coordinate (g) at ( 1, 1);
+  \coordinate (h) at (-2, 0);
+  \coordinate (i) at ( 0, 0);
+  \coordinate (j) at ( 2, 0);
+  \coordinate (k) at (-1,-1);
+  \coordinate (l) at ( 1,-1);
+  \coordinate (m) at ( 0,-2);
+
+  % Lower row
+  \coordinate (n) at (-3,-3);
+  \coordinate (o) at (-1,-3);
+  \coordinate (p) at ( 1,-3);
+  \coordinate (q) at ( 3,-3);
+
+  % Edges
+  \foreach \u/\v in {
+    t/a,t/b,t/c,t/d,t/e,
+    a/b,c/d,a/n,d/q,
+    n/o,p/q,n/r,o/r,p/r,q/r,m/r,
+    a/f,a/h,n/h,n/k,
+    d/g,d/j,q/j,q/l,
+    b/e,b/f,c/e,c/g,
+    e/f,e/g,e/i,
+    f/h,f/i,f/k,
+    g/i,g/j,g/l,
+    h/k,i/k,i/l,j/l,
+    k/m,k/o,l/m,l/p,m/o,m/p,i/m} {
+    \draw[AzulTitulo!65!VerdeEstructura] (\u)--(\v);
+  }
+
+  % Vertices
+  \foreach \v in {
+    t,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r} {
+    \fill[VerdeEstructura] (\v) circle[radius=3pt];
+  }
+\end{tikzpicture}
+\end{minipage}
+#+end_export
+
+#+latex: \bigskip
+
+Prisner (1992) mostró este ejemplo de una gráfica nula (y contraíble) que no tiene vértices dominados, por lo tanto, no es desmantelable.
+#+end_center
+
+***                                                                   :BMCOL:
+:PROPERTIES:
+:BEAMER_col: 0.48
+:BEAMER_OPT: T
+:END:
+
+#+begin_center
+#+begin_export latex
+\begin{minipage}[c][4.5cm][c]{\linewidth}
+\centering
+\begin{tikzpicture}[scale=0.75,
+  x=1.25cm, y=1.25cm,
+  line width=0.65pt
+]
+  % Outer square
+  \coordinate (a) at (-2, 2);
+  \coordinate (b) at ( 2, 2);
+  \coordinate (c) at (-2,-2);
+  \coordinate (d) at ( 2,-2);
+
+  % Inner vertices
+  \coordinate (u) at ( 0, 1.2);
+  \coordinate (l) at (-1.2,0);
+  \coordinate (r) at ( 1.2,0);
+  \coordinate (v) at ( 0,-1.2);
+
+  % Edges
+  \foreach \s/\t in {
+    a/b,a/c,b/d,c/d,
+    a/u,b/u,
+    a/l,c/l,
+    b/r,d/r,
+    c/v,d/v,
+    u/l,u/r,u/v,l/v,r/v} {
+    \draw[AzulTitulo!65!VerdeEstructura] (\s)--(\t);
+  }
+
+  % Vertices
+  \foreach \w in {a,b,c,d,u,l,r,v} {
+    \fill[VerdeEstructura] (\w) circle[radius=3pt];
+  }
+\end{tikzpicture}
+\end{minipage}
+#+end_export
+
+#+latex: \bigskip
+
+Ejemplo en (Larrión, Pizaña, VF, 2008) de lo mismo.
+#+end_center
+
+** COMMENT Dominación y clan comportamiento
 
 *** Resultados
 :PROPERTIES:
@@ -275,8 +408,7 @@ Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2
 #+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
 
 
-
-** Homotopía y el operador de clanes
+** COMMENT Homotopía y el operador de clanes
 
 *** Prisner (1992)
 :PROPERTIES:
@@ -298,6 +430,7 @@ Prisner planteó en 1992 la pregunta: ¿cuándo es \(G\simeq K(G)\)? Dio una con
 #+LATEX: \par\vspace{.15em}\raggedright\SmallText
 
 Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
+
 
 * Topología y gráficas de clanes
 

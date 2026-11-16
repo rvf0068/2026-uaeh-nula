@@ -488,14 +488,16 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
   \]
 - El número de componentes \(\beta_0\) también se conserva.
 - *Corolario 4.1:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
-
-** Ejemplos
-(poner aquí el ejemplo de Prisner y luego nuestro ejemplo de gráfica contraíble y nula sin vértices dominados)
-
 - (Larrión, Pizaña, VF, 2009) Para toda gráfica \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
 - *Corolario:* Si \(G\) es nula, entonces \(\pi_{1}(|G|)\) es trivial.
 
-** Esferas que divergen
+** Pregunta (implícita) de Prisner
+
+[[file:prisner.png]]
+
+E. Prisner, /Convergence of iterated clique graphs/, *Discrete Mathematics* 103 (1992), 199--207.
+
+** COMMENT Esferas que divergen
 
 #+begin_center
 Para el octaedro \(O_n=\overline{nK_2}\),
@@ -509,7 +511,7 @@ Para el octaedro \(O_n=\overline{nK_2}\),
 #+ATTR_BEAMER: :overlay <2->
 Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 
-** Una intuición razonable, pero incompleta
+** COMMENT Una intuición razonable, pero incompleta
 
 #+ATTR_BEAMER: :overlay <+->
 - Las iteradas del octaedro producen homología en dimensiones cada vez mayores.
@@ -520,19 +522,17 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 #+LATEX: \vfill
 #+LATEX: {\scriptsize /Equivariant collapses and the homotopy type of iterated clique graphs/, Discrete Math. 308 (2008), 3199--3207.}
 
-** Un contraejemplo en la otra dirección (2008)
+** No todas las contraíbles son nulas
 
 *** Construcción
 :PROPERTIES:
 :BEAMER_COL: 0.48
 :END:
 
-#+LATEX: \SmallText
 - Se construye una triangulación \(H\) de un disco: \(|H|\) es contraíble.
 - Se forma la *suspensión* \(G=\operatorname{Susp}(H)\) agregando dos vértices no adyacentes, unidos a todo \(H\).
 - Entonces \(|G|\) es una suspensión de un disco: *es contraíble*.
-
-#+LATEX: {\scriptsize Larrión, Pizaña y Villarroel-Flores, /Contractibility and the clique graph operator/ (2008), Fig.~2.}
+- (2008,Larrión, Pizaña, VF) \(G\) es contraíble, pero divergente. En particular, no es nula.
 
 *** Animación
 :PROPERTIES:
@@ -542,48 +542,27 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 
 ** ¿Por qué es divergente la suspensión?
 
-*** Teorema 3.1 y ejemplo
-:PROPERTIES:
-:BEAMER_COL: 0.49
-:END:
-#+LATEX: \SmallText
-En \(K(H)\) hay un ciclo inducido \(C_4\) cuyos vértices opuestos no tienen vecinos comunes fuera de él.
+- En \(K(H)\) hay un ciclo inducido \(C_4\) cuyos vértices opuestos no tienen vecinos comunes fuera de él.
+- Esto permite construir una retracción:
+  \[
+  K(\operatorname{Susp}H)\longrightarrow O_4.
+  \]
+- Como \(O_4\) es divergente, también lo es \(G=\operatorname{Susp}H\).
 
-Esto permite construir una *retracción*
-\[
-K(\operatorname{Susp}H)\longrightarrow O_4.
-\]
-Como \(O_4\) es divergente, también lo es \(G=\operatorname{Susp}H\).
-
-*Teorema 3.2 (2008):* existe una gráfica *contraíble y divergente*.
-
-*** Testigo octaédrico
-:PROPERTIES:
-:BEAMER_COL: 0.49
-:END:
-#+LATEX: \centering\AnimSide{retracto_octaedro}
-
-** Otro teorema del mismo artículo (2008)
+** Otros teoremas del 2008
 
 #+ATTR_BEAMER: :overlay <+->
-- *Teorema 6.2:* si \(K(G)\) es un cono (tiene un vértice universal), entonces \(G\) es contraíble.
-- En particular, el operador de clanes también permite reconocer ciertas gráficas contraíbles.
-- No es una equivalencia: la suspensión anterior es contraíble, pero \(K(G)\) contiene por retracción un octaedro \(O_4\).
-- El artículo dejaba aún abierta la dirección *nula \(\Longrightarrow\) contraíble*.
+- No es cierto que contraíble implique nula, pero la implicación al revés quedó abierta.
+- Teorema: si \(K(G)\) es un cono (tiene un vértice universal), entonces \(G\) es contraíble.
+- En particular, si \(|K^{2}(G)|=1\), se deduce que \(G\) es contraíble. 
 
-#+LATEX: \vfill
-#+LATEX: {\scriptsize F. Larrión, M. A. Pizaña y R. Villarroel-Flores (2008), Teoremas 3.2 y 6.2.}
+** Otra pregunta del 2008
 
-** La pregunta que permanecía abierta
+[[file:eqcollapses.png]]
 
-#+ATTR_BEAMER: :overlay <+->
-- Prisner (1992, p. 205) señaló que no conocía una gráfica *nula* cuyo complejo no fuera homológicamente trivial.
-- En 2008, al construir ejemplos *contraíbles divergentes*, todavía no se sabía si toda gráfica nula debía ser contraíble.
-- Esa pregunta volvió a formularse explícitamente en /Equivariant collapses/ (2008, Pregunta 2).
-- La cuestión era distinta de la ya resuelta: *contraíble* no implica *nula*.
+F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Equivariant collapses and the homotopy type of iterated clique graphs/, *Discrete Mathematics* 308 (2008), 3199--3207.
 
-#+LATEX: \vfill
-#+LATEX: \centering\Large\color{AzulTitulo}¿Nula \(\Longrightarrow\) contraíble?
+* Contraejemplos
 
 ** Dos gráficas nulas que no son contraíbles
 
@@ -592,21 +571,20 @@ Dos ejemplos con *10 vértices y 30 aristas* cada uno.
 
 #+LATEX: \AnimWide{dos_ejemplos_s2}
 
-#+LATEX: \SmallText
-Cadenas graph6: =ICvbvy}|g= y =IEivrzm}o=.
+graph6: =ICvbvy}|g= y =IEivrzm}o=.
 #+end_center
 
-** Sorprendentemente, ambas tienen tipo \(S^2\)
+** Ambas tienen tipo \(S^2\)
 
 #+begin_center
 En cada complejo de completas se pueden ejecutar *20 colapsos simpliciales elementales*.
 
 #+LATEX: \AnimWide{colapsos_s2}
 
-El resultado es una triangulación de la esfera \(S^2\).
+Resultan triangulaciones de la esfera \(S^2\).
 #+end_center
 
-** Certificado de la homotopía
+** COMMENT Certificado de la homotopía
 
 Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos:
 
@@ -623,7 +601,7 @@ Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos
   \]
 - Por clasificación de superficies, es una esfera; los colapsos dan \(|G_1|\simeq|G_2|\simeq S^2\).
 
-** Pero ambas gráficas son nulas
+** Ambas gráficas son nulas
 
 #+begin_center
 Los órdenes de sus primeras iteradas son:
@@ -631,11 +609,11 @@ Los órdenes de sus primeras iteradas son:
 #+LATEX: \AnimWide{iteradas_nulas}
 #+end_center
 
-** Certificados de nulidad
+** Nulidad
 
 #+ATTR_BEAMER: :overlay <+->
-- \(K^3(G_1)\) tiene 63 vértices y se desmantela mediante *62* eliminaciones de vértices dominados.
-- \(K^3(G_2)\) tiene 65 vértices y se desmantela mediante *64* eliminaciones.
+- \(K^3(G_1)\) tiene 63 vértices y es desmantelable.
+- \(K^3(G_2)\) tiene 65 vértices y es desmantelable.
 - Por el teorema de Prisner, ambas gráficas son *nulas*.
 - Sin embargo, \(|G_1|\simeq |G_2|\simeq S^2\): ninguna es contraíble.
 
@@ -645,15 +623,10 @@ Los órdenes de sus primeras iteradas son:
 - \(\text{Contraíble}\;\not\Rightarrow\;\text{Nula}\): el ejemplo \(G=\operatorname{Susp}H\) de 2008 es contraíble y divergente.
 - \(\text{Nula}\;\not\Rightarrow\;\text{Contraíble}\): \(G_1\) y \(G_2\) son nulas y tienen tipo \(S^2\).
 - No hay contradicción con Prisner: en la esfera \(\beta_1=0\), pero \(\beta_2=1\).
-- La homología y las iteradas de clanes proporcionan información diferente y complementaria.
 
-** Fuentes y verificación independiente
+** Verificación independiente
 
-#+LATEX: \SmallText
-- E. Prisner, /Convergence of iterated clique graphs/, *Discrete Mathematics* 103 (1992), 199--207 (Teorema 2.3, Corolario 4.1, p. 205).
-- F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Contractibility and the clique graph operator/, *Discrete Mathematics* 308 (2008), 3461--3469 (Teoremas 3.1 y 3.2, Figura 2).
-- F. Larrión, M. A. Pizaña y R. Villarroel-Flores, /Equivariant collapses and the homotopy type of iterated clique graphs/, *Discrete Mathematics* 308 (2008), 3199--3207.
-- Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
+Los ejemplos \(G_1,G_2\), sus colapsos y los desmantelamientos de \(K^3(G_i)\) son *cálculos reproducibles*:
 
 #+begin_center
 #+LATEX: \texttt{python scripts/verify\_s2\_null.py}

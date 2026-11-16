@@ -259,6 +259,23 @@ Si definimos el *octaedro* \(O_n=\overline{nK_2}\), entonces: \(K(O_n)\cong O_{2
 :END:  
 #+LATEX: \centering\alt<+->{\AnimSide{conjuntos_dominacion}}{\phantom{\AnimSidePoster{conjuntos_dominacion}}}
 
+** Otra aplicación de los vértices dominados
+
+*** Resultados
+:PROPERTIES:
+:BEAMER_COL: 0.61
+:END:
+
+- (Frías-Armenta, Neumann-Lara, Pizaña, 2004) Si \(x\) es dominado en \(G\), entonces \(G\) y \(G-x\) tienen el mismo comportamiento.
+- Es decir, si \(x\in G\) es dominado, entonces \(G\) es nula si y solo si \(G-x\) es nula.
+- El octaedro \(O_3\) con dos hojas adjuntas sigue siendo divergente.
+
+*** Animación
+:PROPERTIES:
+:BEAMER_COL: 0.37
+:END:
+#+LATEX: \centering\alt<+->{\AnimSide{dominados}}{\phantom{\AnimSidePoster{dominados}}}
+
 ** Preguntas
 
 #+ATTR_BEAMER: :overlay <+->
@@ -482,12 +499,12 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
 
 #+ATTR_BEAMER: :overlay <+->
 - Escribamos \(\beta_i(G)=\dim_{\mathbb F_2}H_i(|G|;\mathbb F_2)\).
-- *Teorema 2.3 de Prisner:* Para toda gráfica \(G\),
+- *Teorema (Prisner):* Para toda gráfica \(G\),
   \[
   \beta_1(G)=\beta_1(K(G)),\qquad \beta_2(G)\geq\beta_2(K(G)).
   \]
 - El número de componentes \(\beta_0\) también se conserva.
-- *Corolario 4.1:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
+- *Corolario:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
 - (Larrión, Pizaña, VF, 2009) Para toda gráfica \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
 - *Corolario:* Si \(G\) es nula, entonces \(\pi_{1}(|G|)\) es trivial.
 
@@ -554,7 +571,7 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 #+ATTR_BEAMER: :overlay <+->
 - No es cierto que contraíble implique nula, pero la implicación al revés quedó abierta.
 - Teorema: si \(K(G)\) es un cono (tiene un vértice universal), entonces \(G\) es contraíble.
-- En particular, si \(|K^{2}(G)|=1\), se deduce que \(G\) es contraíble. 
+- En particular, si \(K^{2}(G)\) es un solo vértice, se deduce que \(G\) es contraíble. 
 
 ** Otra pregunta del 2008
 
@@ -612,6 +629,7 @@ Las reducciones de ambos ejemplos dejan un complejo simplicial de dimensión dos
   \chi=8-18+12=2.
   \]
 - Por clasificación de superficies, resultan esferas, por tanto, \(|G_1|\simeq|G_2|\simeq S^2\).
+- Otra manera de verlo es que ambas gráficas tienen un vértice cuya vecindad abierta es un ciclo \(C_{5}\), y al quitar tal vértice, queda una gráfica contraíble.
 
 ** Ambas gráficas son nulas
 
@@ -628,6 +646,7 @@ Los órdenes de sus primeras iteradas son:
 - \(K^3(G_2)\) tiene 65 vértices y es desmantelable.
 - Por el teorema de Prisner, ambas gráficas son *nulas*.
 - Sin embargo, \(|G_1|\simeq |G_2|\simeq S^2\): ninguna es contraíble.
+- \(K^{4}(G_{1})\) tiene 8,794 vértices y 38,070,438 aristas. \(K^{4}(G_{2})\) tiene 9,673 vértices y 46,149,308 aristas.
 
 ** Implicaciones falsas
 

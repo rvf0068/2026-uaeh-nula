@@ -405,7 +405,7 @@ Prisner (1992) mostró este ejemplo de una gráfica nula (y contraíble) que no 
 
 #+latex: \bigskip
 
-Ejemplo en (Larrión, Pizaña, VF, 2008) de una gráfica nula que no es desmantelable.
+Ejemplo en (Larrión, Pizaña, VF, 2008) de una gráfica nula que no es desmantelable. Pero su gráfica de clanes es desmantelable.
 #+end_center
 
 ** COMMENT Dominación y clan comportamiento
@@ -505,7 +505,7 @@ Larrión, Pizaña y Neumann-Lara generalizaron en 2001 el resultado de Prisner.
   \]
 - El número de componentes \(\beta_0\) también se conserva.
 - *Corolario:* Si \(G\) es nula, entonces \(\beta_1(G)=0\).
-- (Larrión, Pizaña, VF, 2009) Para toda gráfica \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
+- (Larrión, Pizaña, VF, 2009) Para toda gráfica conexa \(G\) se tiene que \(\pi_{1}(|G|)\cong\pi_{1}(|K(G)|)\).
 - *Corolario:* Si \(G\) es nula, entonces \(\pi_{1}(|G|)\) es trivial.
 
 ** Pregunta (implícita) de Prisner
@@ -550,6 +550,7 @@ Así, las esferas \(S^2,S^3,S^7,\ldots\) aparecen en una sucesión *divergente*.
 - Se forma la *suspensión* \(G=\operatorname{Susp}(H)\) agregando dos vértices no adyacentes, unidos a todo \(H\).
 - Entonces \(|G|\) es una suspensión de un disco: *es contraíble*.
 - (2008,Larrión, Pizaña, VF) \(G\) es contraíble, pero divergente. En particular, no es nula.
+- Además, \(K(G)\) no es contraíble.
 
 *** Animación
 :PROPERTIES:
